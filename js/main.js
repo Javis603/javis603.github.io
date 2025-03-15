@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Fix any navigation issues
-    const navLinks = document.querySelectorAll('.nav-links a, .mobile-link');
+    const navLinks = document.querySelectorAll('.nav-links a, .mobile-link, .cta-button');
     
     navLinks.forEach(link => {
         const href = link.getAttribute('href');
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
         card.classList.add('tilt-effect');
     });
 
-    // 確保項目卡片的結構正確
+    // 碩士項目卡片的結構正確
     fixProjectCards();
     
     // 確認 favicon 是否能夠正確載入
