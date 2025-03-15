@@ -134,7 +134,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function initializePage() {
         initScrollAnimations();
         initProjectFilters();
-        initThemeToggle();
         initBackToTop();
         initSmoothScrolling();
         addProjectBadges();
@@ -194,28 +193,6 @@ window.addEventListener('load', function() {
             }, 100 * index);
         });
     }, 300);
-});
-
-// 動態調整淺色模式下的配色方案
-document.addEventListener('DOMContentLoaded', function() {
-    const themeToggle = document.getElementById('themeToggle');
-    if (themeToggle) {
-        themeToggle.addEventListener('click', function() {
-            document.body.classList.toggle('light-theme');
-            
-            // 動態調整項目卡片顏色
-            const cards = document.querySelectorAll('.project-card');
-            if (document.body.classList.contains('light-theme')) {
-                cards.forEach(card => {
-                    card.style.boxShadow = '0 10px 30px -15px rgba(0, 0, 0, 0.1)';
-                });
-            } else {
-                cards.forEach(card => {
-                    card.style.boxShadow = '';
-                });
-            }
-        });
-    }
 });
 
 // 修復項目卡片結構
@@ -303,89 +280,6 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.classList.remove('no-scroll');
             menuToggle.querySelector('i').className = 'fas fa-bars';
         });
-    }
-    
-    // 修復主題切換功能
-    const themeToggle = document.getElementById('themeToggle');
-    if(themeToggle) {
-        const themeIcon = themeToggle.querySelector('i');
-        
-        themeToggle.addEventListener('click', function() {
-            document.body.classList.toggle('light-theme');
-            
-            // 更新圖示
-            if(document.body.classList.contains('light-theme')) {
-                themeIcon.className = 'fas fa-sun';
-            } else {
-                themeIcon.className = 'fas fa-moon';
-            }
-            
-            // 儲存主題選擇
-            localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
-            
-            // 調整淺色模式下的樣式
-            adjustLightModeStyles();
-        });
-        
-        // 載入保存的主題設定
-        const savedTheme = localStorage.getItem('theme');
-        if(savedTheme === 'light') {
-            document.body.classList.add('light-theme');
-            themeIcon.className = 'fas fa-sun';
-            
-            // 應用淺色模式樣式
-            adjustLightModeStyles();
-        }
-    }
-});
-
-// 修改主題切換函數 - 確保顏色正確重置
-function initThemeToggle() {
-    const themeToggle = document.getElementById('themeToggle');
-    if (!themeToggle) return;
-    
-    const themeIcon = themeToggle.querySelector('i');
-    
-    themeToggle.addEventListener('click', function() {
-        document.body.classList.toggle('light-theme');
-        
-        // 更新圖示
-        if (document.body.classList.contains('light-theme')) {
-            themeIcon.className = 'fas fa-sun';
-        } else {
-            themeIcon.className = 'fas fa-moon';
-        }
-        
-        // 儲存主題選擇
-        localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
-        
-        // 重要: 移除所有可能的內聯樣式，使用CSS變量來處理
-        document.querySelectorAll('nav a, .logo, .project-card, .social-links a').forEach(el => {
-            el.removeAttribute('style');
-        });
-    });
-    
-    // 載入保存的主題設定
-    const savedTheme = localStorage.getItem('theme');
-    if(savedTheme === 'light') {
-        document.body.classList.add('light-theme');
-        themeIcon.className = 'fas fa-sun';
-    }
-}
-
-// 淺色模式下調整樣式
-function adjustLightModeStyles() {
-    // 使用CSS變量和類來控制樣式，而不是內聯樣式
-}
-
-// 頁面加載時確保樣式正確設置
-document.addEventListener('DOMContentLoaded', function() {
-    // 應用當前主題的樣式
-    const currentTheme = localStorage.getItem('theme');
-    if (currentTheme === 'light') {
-        document.body.classList.add('light-theme');
-        const themeIcon = document.querySelector('#themeToggle i');
-        if (themeIcon) themeIcon.className = 'fas fa-sun';
     }
 });
 
@@ -625,210 +519,80 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// 主題切換功能修復
-document.addEventListener('DOMContentLoaded', function() {
-    // 獲取主題切換按鈕
+// 添加新的統一主題切換函數
+function setupThemeToggle() {
     const themeToggle = document.getElementById('themeToggle');
-    if (themeToggle) {
-        // 移除可能的多重事件監聽器
-        themeToggle.replaceWith(themeToggle.cloneNode(true));
-        
-        // 重新獲取複製後的元素
-        const newThemeToggle = document.getElementById('themeToggle');
-        const themeIcon = newThemeToggle.querySelector('i');
-        
-        // 檢查當前主題
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme === 'light') {
-            document.body.classList.add('light-theme');
-            if (themeIcon) themeIcon.className = 'fas fa-sun';
-        }
-        
-        // 綁定點擊事件
-        newThemeToggle.addEventListener('click', function() {
-            console.log('Theme toggle clicked');
-            document.body.classList.toggle('light-theme');
-            
-            // 更新圖示
-            if (document.body.classList.contains('light-theme')) {
-                themeIcon.className = 'fas fa-sun';
-            } else {
-                themeIcon.className = 'fas fa-moon';
-            }
-            
-            // 儲存到 localStorage
-            const theme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
-            localStorage.setItem('theme', theme);
-            
-            // 應用主題變數
-            applyThemeColors();
-        });
-    }
-});
-
-// 套用主題顏色
-function applyThemeColors() {
-    if (document.body.classList.contains('light-theme')) {
-        document.documentElement.style.setProperty('--dark-bg', '#f8f9fa');
-        document.documentElement.style.setProperty('--light-bg', '#ffffff');
-        document.documentElement.style.setProperty('--text-primary', '#2d3748');
-        document.documentElement.style.setProperty('--text-secondary', '#4a5568');
-        document.documentElement.style.setProperty('--highlight', '#0f83adde');
-    } else {
-        document.documentElement.style.setProperty('--dark-bg', '#0a192f');
-        document.documentElement.style.setProperty('--light-bg', '#112240');
-        document.documentElement.style.setProperty('--text-primary', '#e6f1ff');
-        document.documentElement.style.setProperty('--text-secondary', '#a8b2d1');
-        document.documentElement.style.setProperty('--highlight', '#64ffda');
-    }
-}
-
-// 修復行動裝置上終端機顯示
-document.addEventListener('DOMContentLoaded', function() {
-    // 檢測是否為行動裝置
-    if (window.innerWidth <= 768) {
-        const typingText = document.querySelector('.typing-text');
-        if (typingText) {
-            // 移除打字動畫效果，直接顯示全部文字
-            typingText.style.animation = 'blink 1s infinite';
-            typingText.style.width = '100%';
-            typingText.style.whiteSpace = 'pre-wrap';
-            typingText.style.borderRight = '2px solid var(--highlight)';
-        }
+    
+    if (!themeToggle) {
+        return;
     }
     
-    // 也處理窗口大小改變的情況
-    window.addEventListener('resize', function() {
-        const typingText = document.querySelector('.typing-text');
-        if (!typingText) return;
+    // 確保按鈕可點擊且無其他事件監聽器
+    const newThemeToggle = themeToggle.cloneNode(true);
+    themeToggle.parentNode.replaceChild(newThemeToggle, themeToggle);
+    
+    // 獲取圖標元素
+    const themeIcon = newThemeToggle.querySelector('i');
+    
+    // 載入已保存的主題
+    const savedTheme = localStorage.getItem('theme');
+    
+    if (savedTheme === 'light') {
+        document.body.classList.add('light-theme');
+        if (themeIcon) themeIcon.className = 'fas fa-sun';
+    } else {
+        document.body.classList.remove('light-theme');
+        if (themeIcon) themeIcon.className = 'fas fa-moon';
+    }
+    
+    // 應用主題顏色
+    applyThemeColors();
+    
+    // 添加點擊事件
+    newThemeToggle.addEventListener('click', function(e) {
+        e.preventDefault();
         
-        if (window.innerWidth <= 768) {
-            typingText.style.animation = 'blink 1s infinite';
-            typingText.style.width = '100%';
-            typingText.style.whiteSpace = 'pre-wrap';
+        document.body.classList.toggle('light-theme');
+        
+        // 更新圖標
+        if (document.body.classList.contains('light-theme')) {
+            themeIcon.className = 'fas fa-sun';
+            localStorage.setItem('theme', 'light');
         } else {
-            typingText.style.animation = 'typing 4s steps(44) 1s forwards, blink 1s infinite';
-            typingText.style.width = '0';
-            typingText.style.whiteSpace = 'nowrap';
+            themeIcon.className = 'fas fa-moon';
+            localStorage.setItem('theme', 'dark');
         }
+        
+        // 應用主題顏色
+        applyThemeColors();
+        
+        // 更新 favicon 顏色
+        updateFaviconColor();
     });
-});
-
-// 添加處理視窗大小變化的函數
-window.addEventListener('resize', function() {
-    handleResponsiveNavigation();
     
-    // 保留現有功能
-    if(window.innerWidth <= 768) {
-        adjustForMobileDevices();
-    }
-});
+    // 初始更新 favicon 顏色
+    updateFaviconColor();
+}
 
-// 處理響應式導航
-function handleResponsiveNavigation() {
-    const hamburger = document.getElementById('menuToggle');
-    const navLinks = document.querySelector('.nav-links');
-    const mobileMenu = document.getElementById('mobileMenu');
+// 添加更新 favicon 顏色的函數
+function updateFaviconColor() {
+    const isLightTheme = document.body.classList.contains('light-theme');
     
-    if (window.innerWidth > 768) {
-        // 電腦版模式
-        if (hamburger) hamburger.style.display = 'none';
-        if (navLinks) navLinks.style.display = 'flex';
-        
-        // 如果手機選單是打開的，則關閉它
-        if (mobileMenu && mobileMenu.classList.contains('active')) {
-            mobileMenu.classList.remove('active');
-            document.getElementById('overlay').classList.remove('active');
-            document.body.classList.remove('no-scroll');
-            
-            // 重置漢堡按鈕圖標
-            if (hamburger && hamburger.querySelector('i')) {
-                hamburger.querySelector('i').className = 'fas fa-bars';
-            }
-        }
-    } else {
-        // 手機版模式
-        if (hamburger) {
-            hamburger.style.display = 'flex';
-            // 調整漢堡按鈕位置
-            hamburger.style.position = 'absolute';
-            hamburger.style.right = '1.5rem';
-            hamburger.style.top = '50%';
-            hamburger.style.transform = 'translateY(-50%)';
-        }
-        if (navLinks) navLinks.style.display = 'none';
+    // 檢查是否使用的是 SVG favicon (備用方案)
+    const svgFavicon = document.querySelector('link[rel="icon"][type="image/svg+xml"]');
+    if (svgFavicon) {
+        // 根據主題更新 SVG favicon 顏色
+        const fillColor = isLightTheme ? '%23007ea7' : '%2364ffda';
+        svgFavicon.href = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="0.9em" font-size="90" font-weight="bold" font-family="monospace" text-anchor="middle" x="50" dominant-baseline="middle" fill="${fillColor}">J</text></svg>`;
     }
 }
 
-// 頁面載入時初始化導航設置
-document.addEventListener('DOMContentLoaded', function() {
-    // 初始化導航設置
-    handleResponsiveNavigation();
-    
-    // 改進漢堡按鈕的點擊事件，確保關閉按鈕在相同位置
-    const menuToggle = document.getElementById('menuToggle');
-    if(menuToggle) {
-        menuToggle.addEventListener('click', function() {
-            const icon = this.querySelector('i');
-            if (icon) {
-                // 切換圖標並保持位置不變
-                if (icon.className.includes('fa-bars')) {
-                    icon.className = 'fas fa-times';
-                } else {
-                    icon.className = 'fas fa-bars';
-                }
-            }
-        });
-    }
-});
-
-// 提供更流暢的導航欄縮放體驗
-function smoothNavbarTransition() {
-    // 先判斷當前視窗大小
-    const currentWidth = window.innerWidth;
-    const hamburger = document.getElementById('menuToggle');
-    const navLinks = document.querySelector('.nav-links');
-    
-    if (currentWidth > 768) {
-        // 電腦版: 隱藏漢堡按鈕，顯示導航鏈接
-        if (hamburger) {
-            hamburger.style.opacity = '0';
-            setTimeout(() => {
-                hamburger.style.display = 'none';
-                hamburger.style.opacity = '1';
-            }, 200);
-        }
-        
-        if (navLinks) {
-            navLinks.style.display = 'flex';
-            setTimeout(() => {
-                navLinks.style.opacity = '1';
-            }, 50);
-        }
-    } else {
-        // 手機版: 顯示漢堡按鈕，隱藏導航鏈接
-        if (hamburger) {
-            hamburger.style.display = 'flex';
-            hamburger.style.position = 'absolute';
-            hamburger.style.right = '1.5rem';
-            hamburger.style.top = '50%';
-            hamburger.style.transform = 'translateY(-50%)';
-        }
-        
-        if (navLinks) {
-            navLinks.style.opacity = '0';
-            setTimeout(() => {
-                navLinks.style.display = 'none';
-            }, 200);
-        }
-    }
-}
-
-// 改進頁面加載時的導航處理
+// 確保在頁面完全載入後執行
 window.addEventListener('load', function() {
-    handleResponsiveNavigation();
+    setupThemeToggle();
     
-    // 針對移動設備的專門調整
+    // 其他頁面初始化代碼保持不變
+    handleResponsiveNavigation();
     if(window.innerWidth <= 768) {
         adjustForMobileDevices();
     }
