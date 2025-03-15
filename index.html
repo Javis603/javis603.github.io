@@ -4,7 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Javis603 | Developer Portfolio</title>
+    <meta name="description" content="Javis603 - Software developer specializing in AI solutions and Discord bots">
+    <meta name="keywords" content="developer, portfolio, discord bot, AI, software engineer">
+    
+    <!-- favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon/favicon.ico" type="image/x-icon">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/main.js" defer></script>
     <style>
         :root {
             --primary-color: #3a86ff;
@@ -14,13 +29,18 @@
             --text-primary: #e6f1ff;
             --text-secondary: #8892b0;
             --highlight: #64ffda;
+            --font-main: 'Inter', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+            --transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+            --border-radius: 4px;
+            --shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: var(--font-main);
         }
 
         body {
@@ -99,6 +119,9 @@
         .hamburger {
             display: none;
             cursor: pointer;
+            z-index: 110; /* 提高z-index確保在最上層 */
+            position: relative;
+            padding: 10px;
         }
 
         /* Hero Section */
@@ -114,7 +137,7 @@
         }
 
         .hero-greeting {
-            color: var(--highlight);
+            color: var (--highlight);
             font-size: 1rem;
             margin-bottom: 1rem;
             font-family: monospace;
@@ -198,7 +221,7 @@
 
         .about-text p {
             margin-bottom: 1rem;
-            color: var(--text-secondary);
+            color: var (--text-secondary);
         }
 
         .skills-list {
@@ -326,7 +349,7 @@
             gap: 1rem;
             font-family: monospace;
             font-size: 0.8rem;
-            color: var(--text-secondary);
+            color: var (--text-secondary);
         }
 
         /* Featured Project */
@@ -409,7 +432,7 @@
         }
 
         .social-links a {
-            color: var(--text-primary);
+            color: var (--text-primary);
             font-size: 1.5rem;
             transition: all 0.3s ease;
         }
@@ -521,6 +544,337 @@
             right: 20%;
         }
 
+        /* Mobile Menu (improved) */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 75%;
+            max-width: 400px;
+            height: 100vh;
+            background-color: var(--light-bg);
+            padding: 6rem 2rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 98;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 1rem;
+            font-size: 1.5rem;
+            text-align: center;
+            width: 100%;
+            transition: var(--transition);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 97;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .no-scroll {
+            overflow: hidden;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 3px;
+            background: transparent;
+            z-index: 101;
+        }
+
+        .progress-bar {
+            height: 3px;
+            background: var(--highlight);
+            width: 0%;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: var(--light-bg);
+            color: var(--highlight);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 90;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Light Theme */
+        body.light-theme {
+            --dark-bg: #f5f5f5;
+            --light-bg: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #555555;
+            --shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.2);
+            --highlight: #007ea7;  /* 改為深藍色，在淺色背景下更易辨識 */
+        }
+
+        body.light-theme .project-card,
+        body.light-theme .featured-details {
+            box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-theme .terminal-container {
+            background-color: #2d3748;
+        }
+
+        body.light-theme .terminal-output,
+        body.light-theme .terminal-content {
+            color: #e2e8f0;
+        }
+
+        body.light-theme .hero-greeting,
+        body.light-theme .section-number,
+        body.light-theme .featured-project-type {
+            color: #007ea7;  /* 確保強調色在淺色模式下清晰可見 */
+        }
+
+        body.light-theme .skills-list li::before {
+            color: #007ea7;
+        }
+        
+        body.light-theme .glow {
+            opacity: 0.05;  /* 淺色模式下降低發光球體的透明度 */
+        }
+        
+        /* 訪問計數器樣式 */
+        .visit-counter {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .visit-count {
+            color: var(--highlight);
+            font-weight: bold;
+        }
+
+        /* 項目卡片標籤樣式 */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 0.25rem;
+            color: var(--dark-bg);
+            background-color: var(--highlight);
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* 改進移動菜單顯示 */
+        @media (max-width: 768px) {
+            #menuToggle {
+                display: block;
+                z-index: 100;
+            }
+            
+            .mobile-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 75%;
+                max-width: 400px;
+                height: 100vh;
+                background-color: var(--light-bg);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                z-index: 99;
+                transition: var(--transition);
+                box-shadow: -10px 0px 30px -15px rgba(0, 0, 0, 0.5);
+                padding: 6rem 2rem 2rem;
+            }
+            
+            .mobile-menu.active {
+                right: 0;
+            }
+        }
+        
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 6rem;
+            right: 2rem;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: var(--light-bg);
+            color: var(--highlight);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 90;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Filter buttons for projects */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--text-secondary);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: rgba(100, 255, 218, 0.1);
+            border-color: var(--highlight);
+            color: var(--highlight);
+        }
+
+        /* Project badges */
+        .project-card[data-category], .featured-project[data-category] {
+            position: relative;
+        }
+
+        /* Skills with progress bars */
+        .skill-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-bar {
+            height: 5px;
+            background-color: var(--text-secondary);
+            border-radius: var(--border-radius);
+            opacity: 0.3;
+        }
+
+        .skill-progress {
+            height: 100%;
+            border-radius: var(--border-radius);
+            background-color: var(--highlight);
+            position: relative;
+        }
+
+        .skill-progress-value {
+            width: 0; /* Will be set by data-width attribute */
+            transition: width 1.5s ease;
+        }
+
+        /* Form styles */
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--text-secondary);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--highlight);
+            box-shadow: 0 0 0 2px rgba(100, 255, 218, 0.2);
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
         /* Responsive Styles */
         @media (max-width: 992px) {
             .hero-title {
@@ -573,10 +927,228 @@
             .hero-subtitle {
                 font-size: 1.5rem;
             }
+
+            #hero {
+                padding-top: 3rem;
+            }
+            
+            .hero-content {
+                text-align: center;
+            }
+            
+            .social-links {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                padding: 1rem 0;
+                background-color: var(--dark-bg);
+                box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.1);
+                z-index: 90;
+            }
+            
+            .filter-container {
+                overflow-x: auto;
+                padding-bottom: 1rem;
+                justify-content: flex-start;
+            }
+        }
+
+        /* Mobile Menu (fixed) */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+                z-index: 99;
+            }
+            
+            .mobile-menu {
+                display: flex;
+                visibility: hidden;
+                opacity: 0;
+                right: -100%;
+            }
+            
+            .mobile-menu.active {
+                visibility: visible;
+                opacity: 1;
+                right: 0;
+            }
+        }
+
+        /* Terminal Output Styling */
+        .terminal-output {
+            color: #64ffda;
+            opacity: 0;
+            animation: fadeInOut 0.5s forwards;
+            animation-delay: calc(var(--delay) * 0.5s);
+        }
+
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Project Card Hover Effects */
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--highlight);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+            border-radius: var(--border-radius);
+        }
+
+        .project-card:hover::before {
+            opacity: 0.05;
+        }
+
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--dark-bg);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .preloader.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(100, 255, 218, 0.2);
+            border-top-color: var(--highlight);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Fix for mobile menu not showing */
+        .hamburger {
+            cursor: pointer;
+            z-index: 99;
+        }
+
+        /* 修復漢堡選單位置和點擊問題 */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            z-index: 110; /* 提高z-index確保在最上層 */
+            position: relative;
+            padding: 10px;
+        }
+        
+        /* 改進mobile menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 75%;
+            max-width: 400px;
+            height: 100vh;
+            background-color: var(--light-bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 99;
+            transition: all 0.3s ease-in-out;
+            box-shadow: -10px 0px 30px -15px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* 淺色模式下導航欄顏色調整 */
+        body.light-theme nav {
+            background-color: rgba(245, 245, 245, 0.9);
+        }
+        
+        body.light-theme .nav-links a, 
+        body.light-theme .logo {
+            color: #333; /* 淺色模式下導航文字顏色加深 */
+        }
+        
+        body.light-theme .hamburger i {
+            color: #333; /* 淺色模式下漢堡選單顏色加深 */
+        }
+        
+        /* 改進對手機裝置的適配 */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+                position: absolute;
+                right: 2rem;
+                top: 1.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            /* 修改手機版的hero部分 */
+            #hero {
+                padding-top: 6rem;
+                height: auto;
+                min-height: 100vh;
+            }
+            
+            .hero-content {
+                text-align: left; /* 保持左對齊更好看 */
+                padding-bottom: 3rem;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.8rem;
+            }
+            
+            /* 改進項目卡片顯示 */
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            /* 確保漢堡選單可點擊 */
+            .hamburger i {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
     <!-- Background Effects -->
     <div class="glow glow-1"></div>
     <div class="glow glow-2"></div>
@@ -588,14 +1160,32 @@
             <div class="nav-links">
                 <a href="#about">About</a>
                 <a href="#projects">Projects</a>
-                <a href="#contact">Contact</a>
                 <a href="https://github.com/Javis603" target="_blank">GitHub</a>
             </div>
-            <div class="hamburger">
+            <div class="hamburger" id="menuToggle">
                 <i class="fas fa-bars"></i>
             </div>
         </div>
     </nav>
+    
+    <!-- Mobile Menu - 優化結構 -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#about" class="mobile-link">About</a>
+        <a href="#projects" class="mobile-link">Projects</a>
+        <a href="https://github.com/Javis603" target="_blank">GitHub</a>
+        <!-- 社交鏈接將由 JavaScript 動態添加 -->
+    </div>
+    <div class="overlay" id="overlay"></div>
+    
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </div>
+    
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
 
     <!-- Hero Section -->
     <section id="hero" class="container">
@@ -621,7 +1211,7 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="section container">
+    <section id="about" class="section container fade-in">
         <h2 class="section-title"><span class="section-number">01.</span> About Me</h2>
         <div class="about-content">
             <div class="about-text">
@@ -646,11 +1236,19 @@
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="section container">
+    <section id="projects" class="section container fade-in">
         <h2 class="section-title"><span class="section-number">02.</span> My Projects</h2>
         
+        <!-- Filter Buttons -->
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="ai">AI</button>
+            <button class="filter-btn" data-filter="discord">Discord</button>
+            <button class="filter-btn" data-filter="web">Web</button>
+        </div>
+        
         <!-- Featured Project -->
-        <div class="featured-project">
+        <div class="featured-project" data-category="ai,discord">
             <div class="featured-content">
                 <div class="featured-image">
                     <img src="https://github.com/Javis603/Discord-AIBot/raw/main/.github/assets/screenshots/en/ai-chat.gif" alt="Discord AI Bot">
@@ -678,7 +1276,7 @@
         <!-- Other Projects -->
         <div class="projects-grid">
             <!-- Project 1 (Clone of the Discord bot for visibility) -->
-            <div class="project-card">
+            <div class="project-card tilt-effect" data-category="ai,discord">
                 <div class="project-top">
                     <i class="far fa-folder-open folder-icon"></i>
                     <div class="project-links">
@@ -698,7 +1296,7 @@
             </div>
             
             <!-- Placeholder Project 2 -->
-            <div class="project-card">
+            <div class="project-card tilt-effect" data-category="web">
                 <div class="project-top">
                     <i class="far fa-folder-open folder-icon"></i>
                     <div class="project-links">
@@ -716,7 +1314,7 @@
             </div>
             
             <!-- Placeholder Project 3 -->
-            <div class="project-card">
+            <div class="project-card tilt-effect" data-category="ai">
                 <div class="project-top">
                     <i class="far fa-folder-open folder-icon"></i>
                     <div class="project-links">
@@ -735,31 +1333,247 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="container">
-        <p class="featured-project-type">What's Next?</p>
-        <h2 class="contact-title">Get In Touch</h2>
-        <p class="contact-subtitle">I'm currently looking for new opportunities and collaborations. Whether you have a question or just want to say hi, I'll do my best to get back to you!</p>
-        <a href="mailto:contact@example.com" class="cta-button">Say Hello</a>
-        
-        <div class="social-links">
-            <a href="https://github.com/Javis603" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#"><i class="fab fa-codepen"></i></a>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer>
         <div class="container">
+            <!-- 將社交圖標放入頁腳 -->
+            <div class="social-links">
+                <a href="https://github.com/Javis603" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-codepen"></i></a>
+            </div>
             <p>Designed & Built by Javis603</p>
-            <p>&copy; 2025 All Rights Reserved</p>
+            <p>&copy; <span class="copyright-year">2025</span> All Rights Reserved</p>
+            <div class="visit-counter">
+                You are visitor #<span id="visitCount" class="visit-count">1</span>
+            </div>
         </div>
     </footer>
 
     <!-- JavaScript -->
     <script>
+        // Wait until page is fully loaded
+        window.addEventListener('load', function() {
+            // Hide preloader
+            const preloader = document.getElementById('preloader');
+            preloader.classList.add('fade-out');
+            
+            // Set delays for terminal outputs
+            document.querySelectorAll('.terminal-output').forEach((output, index) => {
+                output.style.setProperty('--delay', index + 1);
+            });
+
+            // Fix mobile menu toggle
+            const hamburger = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('overlay');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            hamburger.addEventListener('click', toggleMenu);
+
+            function toggleMenu() {
+                mobileMenu.classList.toggle('active');
+                overlay.classList.toggle('active');
+                document.body.classList.toggle('no-scroll');
+                
+                // Change hamburger icon
+                const icon = hamburger.querySelector('i');
+                if (mobileMenu.classList.contains('active')) {
+                    icon.className = 'fas fa-times';
+                } else {
+                    icon.className = 'fas fa-bars';
+                }
+            }
+
+            // Close mobile menu when clicking overlay
+            overlay.addEventListener('click', toggleMenu);
+
+            // Close mobile menu when clicking a link
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', toggleMenu);
+            });
+
+            // Rest of your JavaScript
+            // ...existing scroll effect code...
+
+            // Initialize scroll animations
+            initScrollAnimations();
+            
+            // Initialize skill bar animations
+            initSkillBarAnimations();
+            
+            // Project filtering functionality
+            initProjectFilters();
+            
+            // Theme toggle functionality
+            initThemeToggle();
+            
+            // Back to top button functionality
+            initBackToTop();
+            
+            // Fix for smooth scrolling
+            initSmoothScrolling();
+            
+            // 為項目卡片添加標籤
+            addProjectBadges();
+            
+            // 更新版權年份
+            updateCopyrightYear();
+            
+            // 修復移動端菜單問題
+            fixMobileMenuIssues();
+        });
+
+        function initScrollAnimations() {
+            const faders = document.querySelectorAll('.fade-in');
+            
+            const appearOptions = {
+                threshold: 0.15,
+                rootMargin: "0px 0px -100px 0px"
+            };
+            
+            const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('appear');
+                    appearOnScroll.unobserve(entry.target);
+                });
+            }, appearOptions);
+            
+            faders.forEach(fader => {
+                appearOnScroll.observe(fader);
+            });
+        }
+
+        function initSkillBarAnimations() {
+            const skillBars = document.querySelectorAll('.skill-progress-value');
+            const skillOptions = {
+                threshold: 0.5,
+            };
+            
+            const animateSkills = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    const bar = entry.target;
+                    const width = bar.getAttribute('data-width');
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 300); // Small delay for better visual effect
+                    observer.unobserve(bar);
+                });
+            }, skillOptions);
+            
+            skillBars.forEach(bar => {
+                animateSkills.observe(bar);
+            });
+        }
+
+        function initProjectFilters() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const projects = document.querySelectorAll('.project-card, .featured-project');
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    
+                    projects.forEach(project => {
+                        const categories = project.getAttribute('data-category') || '';
+                        
+                        if (filter === 'all' || categories.includes(filter)) {
+                            project.style.display = '';
+                            setTimeout(() => {
+                                project.style.opacity = '1';
+                                project.style.transform = 'translateY(0)';
+                            }, 100);
+                        } else {
+                            project.style.opacity = '0';
+                            project.style.transform = 'translateY(20px)';
+                            setTimeout(() => {
+                                project.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+        }
+
+        function initThemeToggle() {
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = themeToggle.querySelector('i');
+            
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('light-theme');
+                
+                // Change icon based on theme
+                if (document.body.classList.contains('light-theme')) {
+                    themeIcon.className = 'fas fa-sun';
+                } else {
+                    themeIcon.className = 'fas fa-moon';
+                }
+                
+                // Store preference in localStorage
+                const currentTheme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+                localStorage.setItem('theme', currentTheme);
+            });
+            
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-theme');
+                themeIcon.className = 'fas fa-sun';
+            }
+        }
+
+        function initBackToTop() {
+            const backToTopBtn = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 500) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        function initSmoothScrolling() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        const headerOffset = 100;
+                        const elementPosition = target.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Progress bar
+        window.addEventListener('scroll', function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progressBar").style.width = scrolled + "%";
+        });
+
         // Navbar scroll effect
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('navbar');
@@ -769,12 +1583,162 @@
                 navbar.classList.remove('scrolled');
             }
         });
+        
+        function addProjectBadges() {
+            // 添加項目標籤
+            const aiProjects = document.querySelectorAll('[data-category*="ai"]');
+            const discordProjects = document.querySelectorAll('[data-category*="discord"]');
+            const webProjects = document.querySelectorAll('[data-category*="web"]');
+            
+            aiProjects.forEach(project => {
+                if (project.querySelector('.project-tech')) {
+                    const badge = document.createElement('span');
+                    badge.className = 'badge';
+                    badge.textContent = 'AI';
+                    project.querySelector('.project-tech').prepend(badge);
+                }
+            });
+            
+            discordProjects.forEach(project => {
+                if (project.querySelector('.project-tech')) {
+                    const badge = document.createElement('span');
+                    badge.className = 'badge';
+                    badge.textContent = 'Discord';
+                    project.querySelector('.project-tech').prepend(badge);
+                }
+            });
+            
+            webProjects.forEach(project => {
+                if (project.querySelector('.project-tech')) {
+                    const badge = document.createElement('span');
+                    badge.className = 'badge';
+                    badge.textContent = 'Web';
+                    project.querySelector('.project-tech').prepend(badge);
+                }
+            });
+        }
+        
+        function updateCopyrightYear() {
+            // 更新版權年份為當前年份
+            const currentYear = new Date().getFullYear();
+            const copyrightYearElement = document.querySelector('.copyright-year');
+            if (copyrightYearElement) {
+                copyrightYearElement.textContent = currentYear;
+            }
+        }
+        
+        function fixMobileMenuIssues() {
+            // 確保漢堡選單正常運作
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', function(e) {
+                    e.stopPropagation(); // 阻止事件冒泡
+                    mobileMenu.classList.toggle('active');
+                    document.getElementById('overlay').classList.toggle('active');
+                    document.body.classList.toggle('no-scroll');
+                    
+                    const icon = menuToggle.querySelector('i');
+                    if (mobileMenu.classList.contains('active')) {
+                        icon.className = 'fas fa-times';
+                    } else {
+                        icon.className = 'fas fa-bars';
+                    }
+                });
+            }
+            
+            // 調整手機版面的邊距
+            if (window.innerWidth <= 768) {
+                // 確保所有區塊內容都有合適的邊距
+                document.querySelectorAll('section > div').forEach(div => {
+                    div.style.padding = '0 1.5rem';
+                });
+                
+                // Hero區塊特別調整
+                const heroContent = document.querySelector('.hero-content');
+                if (heroContent) {
+                    heroContent.style.margin = '0 auto';
+                }
+                
+                // 項目卡片邊距調整
+                document.querySelectorAll('.project-card').forEach(card => {
+                    card.style.margin = '0 0.5rem 1rem 0.5rem';
+                });
+            }
+        }
 
-        // Simple mobile menu toggle
-        document.querySelector('.hamburger').addEventListener('click', function() {
-            document.querySelector('.nav-links').style.display = 
-                document.querySelector('.nav-links').style.display === 'flex' ? 'none' : 'flex';
+        // 修復favicon加載問題
+        document.addEventListener('DOMContentLoaded', function() {
+            // 確保favicon正確加載
+            const faviconLink = document.querySelector('link[rel="icon"]');
+            if (faviconLink) {
+                // 嘗試使用完整路徑
+                const fullPath = window.location.origin + '/favicon.ico';
+                faviconLink.href = fullPath;
+                
+                // 添加備用圖標
+                const backupFavicon = document.createElement('link');
+                backupFavicon.rel = 'icon';
+                backupFavicon.type = 'image/x-icon';
+                backupFavicon.href = 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>J</text></svg>';
+                document.head.appendChild(backupFavicon);
+            }
         });
+        
+        // 修復深色模式顯示問題
+        function applyThemeColors() {
+            if (document.body.classList.contains('light-theme')) {
+                // 淺色模式樣式
+                document.documentElement.style.setProperty('--dark-bg', '#f5f5f5');
+                document.documentElement.style.setProperty('--light-bg', '#ffffff');
+                document.documentElement.style.setProperty('--text-primary', '#333333');
+                document.documentElement.style.setProperty('--text-secondary', '#555555');
+                document.documentElement.style.setProperty('--highlight', '#007ea7');
+            } else {
+                // 深色模式樣式 - 提高對比度
+                document.documentElement.style.setProperty('--dark-bg', '#0a192f');
+                document.documentElement.style.setProperty('--light-bg', '#112240');
+                document.documentElement.style.setProperty('--text-primary', '#e6f1ff');
+                document.documentElement.style.setProperty('--text-secondary', '#a8b2d1');
+                document.documentElement.style.setProperty('--highlight', '#64ffda');
+            }
+        }
+        
+        // 在頁面加載和主題切換時應用顏色
+        document.addEventListener('DOMContentLoaded', applyThemeColors);
+        
+        // 修改主題切換函數
+        function initThemeToggle() {
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = themeToggle.querySelector('i');
+            
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('light-theme');
+                
+                // 變更圖示
+                if (document.body.classList.contains('light-theme')) {
+                    themeIcon.className = 'fas fa-sun';
+                } else {
+                    themeIcon.className = 'fas fa-moon';
+                }
+                
+                // 保存偏好到localStorage
+                const currentTheme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+                localStorage.setItem('theme', currentTheme);
+                
+                // 應用顏色設置
+                applyThemeColors();
+            });
+            
+            // 檢查已保存的主題偏好
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-theme');
+                themeIcon.className = 'fas fa-sun';
+                applyThemeColors();
+            }
+        }
     </script>
 </body>
 </html>

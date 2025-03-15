@@ -1,0 +1,977 @@
+/* Main CSS File - Extract styles from index.html to make it more maintainable */
+:root {
+    --primary-color: #3a86ff;
+    --secondary-color: #8338ec;
+    --dark-bg: #0a192f;
+    --light-bg: #112240;
+    --text-primary: #e6f1ff;
+    --text-secondary: #8892b0;
+    --highlight: #64ffda;
+    --font-main: 'Inter', sans-serif;
+    --font-mono: 'Fira Code', monospace;
+    --transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    --border-radius: 4px;
+    --shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+}
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-main);
+}
+
+body {
+    background-color: var(--dark-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: var(--highlight);
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--primary-color);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Error state for form inputs */
+.form-control.error {
+    border-color: #ff6b6b;
+    box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2);
+}
+
+/* Animation Classes */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in.appear {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.floating {
+    animation: float 6s ease-in-out infinite;
+}
+
+/* Text Highlighting */
+::selection {
+    background-color: var(--highlight);
+    color: var(--dark-bg);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--dark-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--text-secondary);
+    border-radius: 5px;
+    border: 3px solid var(--dark-bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--highlight);
+}
+
+/* Project Badge */
+.project-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--highlight);
+    color: var(--dark-bg);
+    font-size: 0.7rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0 var(--border-radius) 0 var(--border-radius);
+    font-weight: 600;
+}
+
+/* Tilt Effect for Project Cards */
+.tilt-effect {
+    transition: transform 0.3s ease;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+.tilt-effect:hover {
+    transform: rotateX(2deg) rotateY(2deg);
+}
+
+/* 改進淺色模式樣式 */
+body.light-theme .nav-links a {
+    color: var(--text-primary);
+}
+
+body.light-theme .nav-links a::after {
+    background-color: var(--highlight);
+}
+
+body.light-theme .profile-pic-wrapper::after {
+    border-color: var(--highlight);
+}
+
+body.light-theme .cta-button {
+    border-color: var(--highlight);
+    color: var(--highlight);
+}
+
+body.light-theme .cta-button:hover {
+    background-color: rgba(0, 126, 167, 0.1);
+}
+
+body.light-theme .social-links a {
+    color: var(--text-primary);
+}
+
+body.light-theme .social-links a:hover {
+    color: var(--highlight);
+}
+
+/* 頁面加載動畫優化 */
+.loader {
+    border: 3px solid rgba(100, 255, 218, 0.2);
+    border-top-color: var(--highlight);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* 改進表單樣式 */
+.form-control:focus {
+    outline: none;
+    border-color: var(--highlight);
+    box-shadow: 0 0 0 2px rgba(var(--highlight-rgb), 0.2);
+}
+
+/* 卡片懸浮效果優化 */
+.project-card {
+    box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.15);
+    transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 30px -15px rgba(2, 12, 27, 0.3);
+}
+
+/* 反應式設計優化 */
+@media (max-width: 768px) {
+    .theme-toggle, .back-to-top {
+        bottom: 5.5rem; /* 避免與底部社交鏈接重疊 */
+    }
+    
+    .back-to-top {
+        right: 5rem;
+    }
+}
+
+/* 無障礙設計改進 */
+.form-control:focus {
+    outline: 2px solid var(--highlight);
+}
+
+button:focus, a:focus {
+    outline: 2px dashed var(--highlight);
+    outline-offset: 3px;
+}
+
+/* 跟蹤鼠標效果 */
+.cursor-follower {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--highlight);
+    opacity: 0.5;
+    pointer-events: none;
+    mix-blend-mode: difference;
+    transition: transform 0.1s ease;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+}
+
+/* 改進的漢堡選單樣式 */
+.hamburger {
+    cursor: pointer;
+    z-index: 110;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: var(--light-bg);
+    transition: var(--transition);
+}
+
+.hamburger:hover {
+    background-color: rgba(100, 255, 218, 0.1);
+}
+
+.hamburger i {
+    color: var(--text-primary);
+    font-size: 1.3rem;
+}
+
+/* 改進的移動菜單 */
+.mobile-menu {
+    padding-top: 80px;
+    box-sizing: border-box;
+    box-shadow: -10px 0px 30px -15px rgba(2, 12, 27, 0.7);
+}
+
+.mobile-menu a {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    text-align: center;
+    width: 100%;
+    padding: 1rem;
+    position: relative;
+}
+
+.mobile-menu a::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    width: 0;
+    height: 2px;
+    background-color: var(--highlight);
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+.mobile-menu a:hover::after {
+    width: 30px;
+}
+
+/* 淺色模式下的導航欄調整 */
+body.light-theme nav {
+    background-color: rgba(245, 245, 245, 0.9);
+}
+
+body.light-theme .nav-links a,
+body.light-theme .logo {
+    color: #333;
+}
+
+body.light-theme .hamburger {
+    background-color: rgba(0, 126, 167, 0.1);
+}
+
+body.light-theme .hamburger i {
+    color: #333;
+}
+
+/* 淺色模式下覆蓋層顏色調整 */
+body.light-theme .overlay {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+/* 更好的手機適配樣式 */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.8rem;
+    }
+    
+    #hero {
+        height: auto;
+        min-height: 100vh;
+        padding-top: 6rem;
+        padding-bottom: 3rem;
+    }
+    
+    .about-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .profile-pic-wrapper {
+        width: 250px;
+        height: 250px;
+        margin: 0 auto 2rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .section-title::after {
+        width: 100px;
+    }
+    
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .project-card {
+        padding: 1.5rem;
+    }
+    
+    .featured-project .featured-details {
+        padding: 1.5rem;
+    }
+    
+    .contact-title {
+        font-size: 2.5rem;
+    }
+    
+    /* 修復表單在手機上的顯示 */
+    .form-control {
+        padding: 0.8rem;
+        font-size: 1rem;
+    }
+    
+    /* 修復社交連結在手機上的顯示 */
+    .social-links {
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+    
+    /* 返回頂部按鈕和主題切換按鈕位置調整 */
+    .back-to-top,
+    .theme-toggle {
+        width: 40px;
+        height: 40px;
+        right: 1rem;
+    }
+    
+    .back-to-top {
+        bottom: 5rem;
+    }
+    
+    .theme-toggle {
+        bottom: 1rem;
+    }
+}
+
+/* 更多手機適配性優化 */
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.5rem;
+    }
+    
+    .hero-description {
+        font-size: 1rem;
+    }
+    
+    .terminal-container {
+        padding: 1rem;
+    }
+    
+    .filter-container {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 1rem;
+        justify-content: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .filter-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+        white-space: nowrap;
+    }
+    
+    .section {
+        padding: 5rem 0;
+    }
+}
+
+/* Contact Section - 簡化樣式 */
+#contact {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 6rem 0;
+}
+
+.contact-title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.contact-subtitle {
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+}
+
+/* Social Links - 優化樣式 */
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    margin: 2rem auto;
+}
+
+.social-links a {
+    color: var(--text-primary);
+    font-size: 1.8rem;
+    padding: 0.75rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-links a:hover {
+    color: var(--highlight);
+    transform: translateY(-5px);
+}
+
+/* 確保所有項目卡片的正確結構 */
+.project-card {
+    position: relative;
+    background-color: var(--light-bg);
+    border-radius: 4px;
+    padding: 2rem;
+    transition: transform 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 300px; /* 添加最小高度以確保一致性 */
+}
+
+.project-card .project-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.project-card .project-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.project-card .project-description {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+.project-card .project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: auto; /* 確保技術標籤始終在底部 */
+}
+
+/* Social Links - 優化手機顯示 */
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem auto;
+}
+
+.social-links a {
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-links a:hover {
+    color: var(--highlight);
+    transform: translateY(-5px);
+}
+
+/* 改進手機適配 - 確保內容不貼邊 */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1.5rem;
+    }
+    
+    /* Hero 區塊置中 */
+    #hero {
+        padding-top: 6rem;
+        height: auto;
+        min-height: calc(100vh - 80px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .hero-content {
+        max-width: 100%;
+        text-align: left;
+        margin: 0 auto;
+        padding: 0 0.5rem;
+    }
+    
+    /* 項目卡片改進 */
+    .projects-grid {
+        grid-template-columns: 1fr;
+        margin: 0 0.5rem;
+    }
+    
+    .project-card {
+        margin: 0 auto 2rem;
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    /* 導航按鈕置中 */
+    .hamburger {
+        right: 1.5rem;
+        top: 1.5rem;
+    }
+    
+    /* 底部社交連結置中 */
+    .social-links {
+        position: static;
+        margin-top: 3rem;
+        margin-bottom: 2rem;
+        box-shadow: none;
+        background-color: transparent;
+    }
+    
+    /* 區塊間距調整 */
+    .section {
+        padding: 5rem 0;
+    }
+    
+    /* 關於我部分居中 */
+    .about-text, .skills-list {
+        padding: 0 0.5rem;
+    }
+    
+    /* 螢幕超小時的調整 */
+    @media (max-width: 375px) {
+        .hero-title {
+            font-size: 2rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+        }
+        
+        .container {
+            padding: 0 1rem;
+        }
+    }
+}
+
+/* Footer 樣式更新 */
+footer {
+    padding: 3rem 0 1.5rem;  /* 增加頂部間距 */
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* 社交圖標置於頁腳的樣式 */
+footer .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 0 auto 1.5rem;  /* 調整上下邊距 */
+}
+
+footer .social-links a {
+    color: var(--text-primary);
+    font-size: 1.3rem;
+    padding: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+footer .social-links a:hover {
+    color: var(--highlight);
+    transform: translateY(-3px);
+}
+
+footer p {
+    margin-bottom: 0.5rem;  /* 減少段落之間的間距 */
+}
+
+.visit-counter {
+    margin-top: 0.5rem;  /* 減少計數器的頂部邊距 */
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* 刪除不再需要的 #contact 樣式 */
+/* 或者保留但不再使用 */
+
+/* 移動裝置樣式優化 */
+@media (max-width: 768px) {
+    footer .social-links {
+        margin-bottom: 1rem;
+    }
+    
+    footer {
+        padding: 2rem 0 1rem;
+    }
+}
+
+/* 導航欄樣式優化 */
+nav {
+    display: flex;
+    justify-content: center; /* 置中導航欄內容 */
+    align-items: center;
+    padding: 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+    background-color: rgba(22, 37, 59, 0.95); /* 比背景略亮但仍保持深色調 */
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    height: 80px; /* 固定高度使布局更穩定 */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 2rem;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--highlight); /* 使用變量確保主題切換時顏色正確 */
+    letter-spacing: 0.5px;
+    padding: 0.5rem 0;
+    font-family: var(--font-mono);
+}
+
+.nav-links {
+    display: flex;
+    gap: 2.5rem;
+    margin-right: 1rem;
+}
+
+.nav-links a {
+    color: var(--text-primary); /* 使用變量確保主題切換時顏色正確 */
+    font-weight: 500;
+    position: relative;
+    padding: 0.5rem 0;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--highlight); /* 使用變量確保主題切換時顏色正確 */
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--highlight); /* 使用變量確保主題切換時顏色正確 */
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+nav.scrolled {
+    background-color: rgba(27, 42, 65, 0.98); /* 滾動後的深色背景 */
+    height: 70px; /* 滾動後高度減小 */
+}
+
+/* 淺色模式導航欄樣式 */
+body.light-theme nav {
+    background-color: rgba(248, 249, 250, 0.9); /* 微調淺色背景 */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08); /* 輕微陰影 */
+}
+
+body.light-theme .logo {
+    color: var(--highlight);
+}
+
+body.light-theme .nav-links a {
+    color: var(--text-primary); /* 使用變量確保主題切換時顏色正確 */
+}
+
+body.light-theme nav.scrolled {
+    background-color: rgba(255, 255, 255, 0.98);
+}
+
+/* 淺色模式下的配色優化 */
+body.light-theme {
+    --dark-bg: #f8f9fa; /* 更柔和的背景色 */
+    --light-bg: #ffffff;
+    --text-primary: #2d3748; /* 深灰色文本，不是純黑 */
+    --text-secondary: #4a5568; /* 次要文本色 */
+    --highlight: #0f83adde; /* 更和諧的強調色 */
+    --shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.15);
+}
+
+/* 手機版導航欄調整 */
+@media (max-width: 768px) {
+    nav {
+        padding: 0 1rem;
+        height: 70px;
+    }
+    
+    .nav-links {
+        display: none;
+    }
+    
+    .hamburger {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        position: relative;
+        z-index: 110;
+        border-radius: 50%;
+        margin-left: auto;
+    }
+    
+    nav.scrolled {
+        height: 60px;
+    }
+}
+
+/* 改進漢堡菜單按鈕樣式 */
+.hamburger {
+    cursor: pointer;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: rgba(17, 34, 64, 0.7);
+    display: none; /* 默認隱藏，僅在移動設備顯示 */
+    align-items: center;
+    justify-content: center;
+    z-index: 110;
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.hamburger:hover {
+    background-color: rgba(100, 255, 218, 0.1);
+}
+
+.hamburger i {
+    color: var(--highlight);
+    font-size: 1.3rem;
+}
+
+/* 美化移動菜單樣式 */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 75%;
+    max-width: 350px;
+    height: 100vh;
+    background-color: rgba(17, 34, 64, 0.95);
+    backdrop-filter: blur(15px);
+    padding: 5rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 98;
+    transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+    box-shadow: -10px 0px 30px -15px rgba(0, 0, 0, 0.7);
+    border-left: 1px solid rgba(100, 255, 218, 0.1);
+}
+
+.mobile-menu a {
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    text-align: center;
+    width: 100%;
+    padding: 1rem;
+    color: var(--text-primary);
+    letter-spacing: 1px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu a::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    width: 0;
+    height: 2px;
+    background-color: var(--highlight);
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+.mobile-menu a:hover {
+    color: var(--highlight);
+    transform: translateY(-2px);
+}
+
+.mobile-menu a:hover::after {
+    width: 30px;
+}
+
+.mobile-menu.active {
+    right: 0;
+}
+
+/* 手機版頁面優化 - 避免內容貼邊 */
+@media (max-width: 768px) {
+    /* 內容容器增加內邊距 */
+    .container {
+        padding: 0 1.8rem;
+    }
+    
+    /* 改進導航欄在手機上的顯示 */
+    nav {
+        height: 70px; /* 稍微降低高度 */
+    }
+    
+    nav .container {
+        padding: 0 1.2rem;
+    }
+    
+    .logo {
+        font-size: 1.3rem;
+        padding-left: 0.5rem;
+    }
+    
+    .hamburger {
+        display: flex;
+        right: 1.2rem;
+    }
+    
+    /* 確保所有區塊有合適的邊距 */
+    section {
+        margin: 0 auto;
+        width: 100%;
+    }
+    
+    /* Hero 區塊特別調整，確保充分可見 */
+    #hero {
+        padding-top: 5.5rem;
+        padding-bottom: 3rem;
+    }
+    
+    .hero-content {
+        padding: 0 0.5rem;
+        width: 100%;
+    }
+    
+    /* 項目卡片優化 */
+    .project-card {
+        margin: 0 auto 2rem;
+        padding: 1.8rem; /* 增加內邊距 */
+        width: 94%;
+        max-width: 400px;
+    }
+    
+    /* 消除頁面底部的過度間距 */
+    footer {
+        padding-bottom: 2.5rem; /* 確保不被固定按鈕阻擋 */
+    }
+    
+    /* 主題切換和返回頂部按鈕位置調整 */
+    .theme-toggle {
+        bottom: 1.5rem;
+        right: 1.5rem;
+    }
+    
+    .back-to-top {
+        bottom: 1.5rem;
+        right: 5rem;
+    }
+    
+    /* 修復行動裝置上的 overlay */
+    .overlay.active {
+        background-color: rgba(0, 0, 0, 0.75); /* 加深覆蓋層 */
+        backdrop-filter: blur(3px); /* 添加模糊效果 */
+    }
+}
+
+/* 針對更小的手機屏幕進行特殊優化 */
+@media (max-width: 480px) {
+    /* 增加內邊距，防止文字太貼近邊緣 */
+    .container {
+        padding: 0 1.2rem;
+    }
+    
+    /* 減小導航欄高度 */
+    nav {
+        height: 65px;
+    }
+    
+    /* 減小項目卡片邊距 */
+    .project-card {
+        padding: 1.5rem;
+    }
+    
+    /* 確保技能條在小屏幕上可以完全顯示 */
+    .skill-name {
+        font-size: 0.9rem;
+    }
+}
+
+/* 改進移動菜單中的社交鏈接 */
+.mobile-social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.mobile-social-links a {
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    margin: 0;
+}
+
+.mobile-social-links a:hover::after {
+    width: 0; /* 移除社交圖標下的懸停線條 */
+}

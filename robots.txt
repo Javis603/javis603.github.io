@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://javis603.github.io/sitemap.xml
