@@ -735,14 +735,14 @@ body.light-theme nav.scrolled {
     background-color: rgba(255, 255, 255, 0.98);
 }
 
-/* 淺色模式下的配色優化 */
+/* 淺色模式下的配色優化 - 更新為更加現代化的設計 */
 body.light-theme {
-    --dark-bg: #f8f9fa; /* 更柔和的背景色 */
-    --light-bg: #ffffff;
-    --text-primary: #2d3748; /* 深灰色文本，不是純黑 */
-    --text-secondary: #4a5568; /* 次要文本色 */
-    --highlight: #0f83adde; /* 更和諧的強調色 */
-    --shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.15);
+    --dark-bg: #f8f9fa; /* 柔和的背景色 */
+    --light-bg: #ffffff; /* 純白色背景，提供清晰對比 */
+    --text-primary: #0a2540; /* 深藍黑色文本，接近 Apple 的主要文字顏色 */
+    --text-secondary: #4a5568; /* 中等深度的灰色，提供層次感 */
+    --highlight: #0071e3; /* Apple 風格的藍色強調色 */
+    --shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.1); /* 更輕柔的陰影 */
 }
 
 /* 手機版導航欄調整 */
@@ -750,6 +750,7 @@ body.light-theme {
     nav {
         padding: 0 1rem;
         height: 70px;
+        position: relative; /* 確保相對定位，讓漢堡按鈕可以絕對定位 */
     }
     
     .nav-links {
@@ -760,12 +761,11 @@ body.light-theme {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 40px;
-        height: 40px;
-        position: relative;
+        position: absolute;
+        right: 1.5rem;
+        top: 50%;
+        transform: translateY(-50%);
         z-index: 110;
-        border-radius: 50%;
-        margin-left: auto;
     }
     
     nav.scrolled {
@@ -800,6 +800,16 @@ body.light-theme {
 .hamburger i {
     color: var(--highlight);
     font-size: 1.3rem;
+    transition: transform 0.3s ease;
+}
+
+/* 為關閉圖標添加旋轉效果 */
+.hamburger i.fa-times {
+    transform: rotate(90deg);
+}
+
+.hamburger i.fa-bars {
+    transform: rotate(0deg);
 }
 
 /* 美化移動菜單樣式 */
@@ -974,4 +984,140 @@ body.light-theme {
 
 .mobile-social-links a:hover::after {
     width: 0; /* 移除社交圖標下的懸停線條 */
+}
+
+/* 強化主題切換按鈕，確保其點擊區域夠大且可交互 */
+.theme-toggle {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: var(--light-bg);
+    color: var(--highlight);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 95; /* 確保在其他元素之上 */
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(100, 255, 218, 0.2);
+}
+
+.theme-toggle:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.theme-toggle i {
+    font-size: 1.3rem;
+    color: var(--highlight);
+    pointer-events: none; /* 確保圖標不會干擾點擊 */
+}
+
+/* 修復行動裝置上終端機顯示問題 */
+@media (max-width: 768px) {
+    .typing-text {
+        animation: blink 1s infinite !important; /* 覆蓋原有動畫 */
+        width: 100% !important; /* 確保顯示全部內容 */
+        white-space: pre-wrap !important; /* 允許文字換行 */
+        overflow: visible !important; /* 確保文字不被截斷 */
+    }
+    
+    .terminal-container {
+        padding: 1rem !important;
+        margin-top: 1.5rem;
+        overflow: hidden;
+    }
+    
+    .terminal-content p {
+        margin-bottom: 0.5rem;
+        white-space: pre-wrap; /* 確保在小螢幕上能夠自動換行 */
+    }
+    
+    /* 確保主題切換按鈕在手機上可見且易於點擊 */
+    .theme-toggle {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 50px;
+        height: 50px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .theme-toggle i {
+        font-size: 1.5rem; /* 增大圖標尺寸，更易點擊 */
+    }
+}
+
+/* 淺色模式導航欄樣式優化 */
+body.light-theme nav {
+    background-color: rgba(248, 249, 250, 0.85); /* 微調淺色背景，增加透明度 */
+    backdrop-filter: blur(10px); /* 增加毛玻璃效果，類似 Apple 設計 */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* 更輕柔的陰影 */
+}
+
+body.light-theme .logo {
+    color: var(--highlight); /* 使用變量確保一致性 */
+}
+
+body.light-theme .nav-links a {
+    color: var(--text-primary); /* 使用深色文本，確保可讀性 */
+}
+
+body.light-theme nav.scrolled {
+    background-color: rgba(255, 255, 255, 0.95); /* 滾動後增加不透明度 */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08); /* 增強陰影 */
+}
+
+/* 淺色模式下的按鈕和互動元素優化 */
+body.light-theme .cta-button {
+    border-color: var(--highlight);
+    color: var(--highlight);
+}
+
+body.light-theme .cta-button:hover {
+    background-color: rgba(0, 113, 227, 0.08); /* 使用 highlight 顏色但透明度低 */
+}
+
+body.light-theme .theme-toggle,
+body.light-theme .back-to-top {
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+body.light-theme .theme-toggle i,
+body.light-theme .back-to-top i {
+    color: var(--highlight);
+}
+
+/* 淺色模式下的卡片和項目樣式 */
+body.light-theme .project-card {
+    background-color: #ffffff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+body.light-theme .terminal-container {
+    background-color: #2d3748; /* 確保終端仍保持深色以體現代碼區域 */
+}
+
+body.light-theme .social-links a {
+    color: var(--text-primary);
+}
+
+body.light-theme .social-links a:hover {
+    color: var(--highlight);
+}
+
+/* 淺色模式下的徽章和進度條顏色 */
+body.light-theme .badge {
+    background-color: var(--highlight);
+    color: #ffffff; /* 白色文本在藍色背景上 */
+}
+
+body.light-theme .skill-progress {
+    background-color: var(--highlight);
 }
