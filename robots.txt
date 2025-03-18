@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://javis603.github.io/sitemap.xml
+Sitemap: https://javis-ai.com/sitemap.xml
