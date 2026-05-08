@@ -477,6 +477,27 @@ h3{font-size:clamp(1.3rem,2.5vw,1.7rem);font-weight:600}
     .footer-meta{flex-wrap:wrap;justify-content:center}
 }
 
+@media(min-width:1600px){
+    .container{max-width:1320px}
+    h1{font-size:7.5rem}
+    h2{font-size:3.4rem}
+    .hero-content{max-width:960px}
+    .hero-title{font-size:1.8rem}
+    .hero-desc{font-size:1.15rem;max-width:680px}
+    .hero-badge{font-size:.85rem}
+    .section{padding:10rem 0}
+    .stack-grid{grid-template-columns:repeat(3,1fr)}
+}
+
+@media(min-width:2200px){
+    h1{font-size:9rem}
+    h2{font-size:3.8rem}
+    .hero-content{max-width:1100px}
+    .hero-title{font-size:2.1rem}
+    .hero-desc{font-size:1.25rem;max-width:760px}
+    .section{padding:12rem 0}
+}
+
 @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
     [data-reveal]{opacity:1;transform:none}
