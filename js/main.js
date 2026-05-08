@@ -1,105 +1,123 @@
+/* ========================================
+   Javis Ng — Portfolio v2 Interactions
+   ======================================== */
+
 document.addEventListener('DOMContentLoaded', () => {
-    initSpotlightEffect();
+    initReveal();
+    initTilt();
+    initDecrypt();
+    initMagnetic();
     initMobileMenu();
-    // initVisitorCounter(); // 已移除：改用不蒜子 (Busuanzi) 外部腳本自動處理
     initSmoothScroll();
 });
 
-/* ----------------------------------------------------------------
-   1. Spotlight Effect (Bento Grid 滑鼠追蹤光暈)
----------------------------------------------------------------- */
-function initSpotlightEffect() {
-    const spotlights = document.querySelectorAll('.spotlight');
-    
-    document.addEventListener('mousemove', (e) => {
-        spotlights.forEach(card => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            // 設定 CSS 變數，讓 radial-gradient 跟隨滑鼠
-            card.style.setProperty('--mouse-x', `${x}px`);
-            card.style.setProperty('--mouse-y', `${y}px`);
-        });
-    });
-
-    // 處理卡片點擊 (讓整張卡片都可點擊，但避開內部連結)
-    document.querySelectorAll('.bento-card').forEach(card => {
-        card.addEventListener('click', (e) => {
-            // 如果點擊的是裡面的連結或按鈕，不觸發整卡跳轉
-            if (e.target.closest('a') || e.target.closest('button')) return;
-
-            const url = card.getAttribute('data-url');
-            if (url && url !== '#') {
-                window.open(url, '_blank');
+/* ── 1. Scroll Reveal ──────────────────── */
+function initReveal() {
+    const els = document.querySelectorAll('[data-reveal]');
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const delay = parseInt(entry.target.dataset.delay) || 0;
+                setTimeout(() => entry.target.classList.add('visible'), delay);
+                obs.unobserve(entry.target);
             }
         });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+    els.forEach(el => obs.observe(el));
+}
+
+/* ── 2. 3D Tilt ────────────────────────── */
+function initTilt() {
+    if ('ontouchstart' in window) return;
+    document.querySelectorAll('[data-tilt]').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const r = card.getBoundingClientRect();
+            const x = (e.clientX - r.left) / r.width;
+            const y = (e.clientY - r.top) / r.height;
+            card.style.transform =
+                `perspective(800px) rotateX(${(0.5 - y) * 5}deg) rotateY(${(x - 0.5) * 5}deg) scale3d(1.01,1.01,1.01)`;
+        });
+        card.addEventListener('mouseenter', () => { card.style.transition = 'transform .15s ease-out'; });
+        card.addEventListener('mouseleave', () => {
+            card.style.transition = 'transform .4s var(--ease)';
+            card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) scale3d(1,1,1)';
+        });
     });
 }
 
-/* ----------------------------------------------------------------
-   2. Mobile Menu (手機版選單邏輯 - 含關閉按鈕)
----------------------------------------------------------------- */
+/* ── 3. Decrypted Text ─────────────────── */
+function initDecrypt() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    document.querySelectorAll('[data-decrypt]').forEach(el => {
+        const original = el.textContent;
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) { scramble(el, original, chars); obs.unobserve(el); }
+            });
+        }, { threshold: 0.5 });
+        obs.observe(el);
+    });
+}
+
+function scramble(el, original, chars) {
+    let i = 0;
+    const iv = setInterval(() => {
+        el.textContent = original.split('').map((c, idx) => {
+            if (c === ' ') return ' ';
+            return idx < i ? original[idx] : chars[Math.floor(Math.random() * chars.length)];
+        }).join('');
+        i += 0.5;
+        if (i >= original.length) { el.textContent = original; clearInterval(iv); }
+    }, 30);
+}
+
+/* ── 4. Magnetic Buttons ───────────────── */
+function initMagnetic() {
+    if ('ontouchstart' in window) return;
+    document.querySelectorAll('[data-magnetic]').forEach(el => {
+        el.addEventListener('mousemove', e => {
+            const r = el.getBoundingClientRect();
+            el.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.15}px,${(e.clientY - r.top - r.height / 2) * 0.15}px)`;
+        });
+        el.addEventListener('mouseenter', () => { el.style.transition = 'transform .15s ease-out'; });
+        el.addEventListener('mouseleave', () => {
+            el.style.transition = 'transform .4s var(--ease)';
+            el.style.transform = 'translate(0,0)';
+        });
+    });
+}
+
+/* ── 5. Mobile Menu — Dropdown card ────── */
 function initMobileMenu() {
-    const hamburger = document.querySelector('.hamburger');
-    const mobileMenu = document.querySelector('.mobile-menu');
-    const closeBtn = document.querySelector('.close-menu');
-    const menuLinks = document.querySelectorAll('.mobile-menu a');
+    const toggle = document.querySelector('.nav-toggle');
+    const dropdown = document.querySelector('.nav-dropdown');
+    if (!toggle || !dropdown) return;
 
-    if (!hamburger) return; 
+    const shut = () => { dropdown.classList.remove('open'); toggle.classList.remove('open'); };
 
-    // 切換選單狀態 (開啟/關閉)
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        mobileMenu.classList.toggle('active');
-        
-        // 鎖定/解鎖背景滾動
-        if (mobileMenu.classList.contains('active')) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
+    toggle.addEventListener('click', e => {
+        e.stopPropagation();
+        dropdown.classList.toggle('open');
+        toggle.classList.toggle('open');
     });
 
-    // 定義關閉選單函數
-    const closeMenu = () => {
-        hamburger.classList.remove('active');
-        mobileMenu.classList.remove('active');
-        document.body.style.overflow = '';
-    };
+    dropdown.querySelectorAll('a').forEach(a => a.addEventListener('click', shut));
 
-    // 點擊 X 按鈕關閉
-    if (closeBtn) {
-        closeBtn.addEventListener('click', closeMenu);
-    }
-
-    // 點擊任一連結後自動關閉選單
-    menuLinks.forEach(link => {
-        link.addEventListener('click', closeMenu);
+    document.addEventListener('click', e => {
+        if (!toggle.contains(e.target) && !dropdown.contains(e.target)) shut();
     });
 }
 
-/* ----------------------------------------------------------------
-   3. Smooth Scroll (平滑滾動優化)
----------------------------------------------------------------- */
+/* ── 6. Smooth Scroll ──────────────────── */
 function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', function (e) {
             e.preventDefault();
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                // 扣除導航列高度 (配合 CSS 的 scroll-padding-top)
-                const headerOffset = 80; 
-                const elementPosition = targetElement.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: "smooth"
-                });
+            const id = this.getAttribute('href');
+            if (id === '#') return;
+            const el = document.querySelector(id);
+            if (el) {
+                window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 80, behavior: 'smooth' });
             }
         });
     });

@@ -3,193 +3,260 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Javis603 | Cybersecurity Developer</title>
-    <meta name="description" content="Javis603 - Portfolio of a Cybersecurity Developer specializing in AI solutions and Discord bots.">
-    
+    <title>Javis Ng — AI Builder & Developer</title>
+    <meta name="description" content="Javis Ng — AI builder and developer. Focused on AI agents, LLM integration, and developer tools.">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="icon" href="favicon/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
     <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
     <link rel="manifest" href="favicon/site.webmanifest">
-    <link rel="shortcut icon" href="favicon/favicon.ico">
-    <meta name="theme-color" content="#ffffff">
-    
+    <meta name="theme-color" content="#0b0b11">
+
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="ambient-light"></div>
+    <!-- Background layers -->
+    <div class="bg-mesh">
+        <div class="mesh-blob mesh-1"></div>
+        <div class="mesh-blob mesh-2"></div>
+        <div class="mesh-blob mesh-3"></div>
+    </div>
+    <div class="bg-grid"></div>
+    <div class="bg-noise"></div>
 
-    <nav class="glass-nav">
-        <div class="container nav-container">
-            <a href="#about" class="logo">Javis<span class="highlight">603</span></a>
-            <div class="nav-links">
-                <a href="#about">About</a>
-                <a href="#projects">Projects</a>
-                <a href="https://github.com/Javis603" target="_blank" class="github-btn"><i class="fab fa-github"></i> GitHub</a>
-            </div>
-            
-            <div class="hamburger">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-            </div>
+    <!-- Navigation — Floating Pill -->
+    <nav class="nav">
+        <a href="#" class="nav-logo">JN<span>.</span></a>
+        <div class="nav-center">
+            <a href="#about" data-magnetic>About</a>
+            <a href="#projects" data-magnetic>Projects</a>
+            <a href="#stack" data-magnetic>Stack</a>
+            <a href="#contact" data-magnetic>Contact</a>
+        </div>
+        <div class="nav-right">
+            <a href="https://github.com/Javis603" target="_blank" class="nav-gh" data-magnetic aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <button class="nav-toggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+        <!-- Mobile dropdown card -->
+        <div class="nav-dropdown">
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#stack">Stack</a>
+            <a href="#contact">Contact</a>
         </div>
     </nav>
 
-    <div class="mobile-menu">
-        <div class="close-menu">
-            <i class="fas fa-times"></i>
-        </div>
-
-        <div class="menu-content">
-            <span class="menu-label">// SYSTEM NAVIGATION</span>
-            <a href="#about" class="menu-link">About_Me</a>
-            <a href="#projects" class="menu-link">Projects_</a>
-            <a href="#stack" class="menu-link">Tech_Stack</a>
-            <a href="https://github.com/Javis603" target="_blank" class="menu-link highlight">GitHub Repo</a>
-        </div>
-        <div class="menu-footer">
-            <p>Javis603 © 2025</p>
-        </div>
-    </div>
-
-    <section id="about">
-        <div class="container hero-container">
-            <div class="hero-text fade-in-up">
-                <div class="status-badge">
-                    <span class="status-dot"></span>
-                    System Online
-                </div>
-                <h1>Building secure <br/><span class="gradient-text">AI Intelligence</span></h1>
-                <p class="hero-sub">
-                    Cybersecurity Developer. <br>
-                    Crafting advanced Discord bots and AI solutions.
-                </p>
-                <div class="cta-group">
-                    <a href="#projects" class="btn btn-primary">View Projects</a>
-                    <a href="#stack" class="btn btn-secondary">Tech Stack</a>
-                </div>
+    <!-- ==================== HERO ==================== -->
+    <section id="hero" class="section-hero">
+        <div class="container hero-content">
+            <div class="hero-badge" data-reveal>
+                <span class="pulse-dot"></span>
+                Currently exploring AI agents
             </div>
-            
-            <div class="hero-visual fade-in-up delay-1">
-                <div class="terminal-window glass-panel">
-                    <div class="terminal-header">
-                        <div class="dots">
-                            <span class="dot red"></span>
-                            <span class="dot yellow"></span>
-                            <span class="dot green"></span>
-                        </div>
-                        <span class="terminal-title">bash — 80x24</span>
+            <h1 data-reveal data-delay="80">
+                <span class="hero-name" data-decrypt>Javis Ng</span>
+            </h1>
+            <p class="hero-title" data-reveal data-delay="160">AI Builder <span class="hero-sep">&</span> Developer</p>
+            <p class="hero-desc" data-reveal data-delay="240">
+                Turning curiosity into working software — AI chat platforms,<br>
+                home lab infra, and tools that make AI more accessible.
+            </p>
+            <div class="hero-cta" data-reveal data-delay="320">
+                <a href="#projects" class="btn btn-primary" data-magnetic>
+                    <span>View Projects</span>
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                <a href="https://github.com/Javis603" target="_blank" class="btn btn-ghost" data-magnetic>
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </a>
+            </div>
+        </div>
+        <div class="scroll-hint">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- ==================== ABOUT ==================== -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="section-label" data-reveal>// ABOUT</div>
+            <div class="about-grid">
+                <div class="about-text">
+                    <h2 data-reveal data-delay="80">Building at the intersection of <span class="text-gradient">AI and Security</span></h2>
+                    <p data-reveal data-delay="160">Focused on AI agents, LLM integration, and developer tools. I learn by shipping — building, breaking, and iterating until it works.</p>
+                </div>
+                <div class="about-cards">
+                    <div class="highlight-card" data-reveal data-delay="100">
+                        <strong>AI / LLM</strong>
+                        <span>Multi-model integration & agents</span>
                     </div>
-                    <div class="terminal-body">
-                        <div class="code-line">
-                            <span class="prompt">javis@root:~$</span>
-                            <span class="cmd">whoami</span>
-                        </div>
-                        <div class="code-output">
-                            > Name: Javis<br>
-                            > Role: Cybersecurity Developer<br>
-                            > Stack: Python, Node.js, AI/LLM<br>
-                            > Status: Online
-                        </div>
-                        <div class="code-line">
-                            <span class="prompt">javis@root:~$</span>
-                            <span class="cursor">_</span>
-                        </div>
+                    <div class="highlight-card" data-reveal data-delay="160">
+                        <strong>InfoSec</strong>
+                        <span>Security-first development</span>
+                    </div>
+                    <div class="highlight-card" data-reveal data-delay="220">
+                        <strong>Infrastructure</strong>
+                        <span>Self-hosted & Docker native</span>
+                    </div>
+                    <div class="highlight-card" data-reveal data-delay="280">
+                        <strong>Open Source</strong>
+                        <span>Ship it, share it, iterate</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="stack" class="container">
-        <h2 class="section-heading">Tech Stack</h2>
-        <div class="stack-grid">
-            <div class="stack-item"><i class="fab fa-python"></i> Python</div>
-            <div class="stack-item"><i class="fab fa-js"></i> JavaScript</div>
-            <div class="stack-item"><i class="fas fa-brain"></i> AI / LLM</div>
-            <div class="stack-item"><i class="fas fa-shield-alt"></i> InfoSec</div>
-            <div class="stack-item"><i class="fab fa-discord"></i> Discord API</div>
-            <div class="stack-item"><i class="fab fa-docker"></i> Docker</div>
+    <!-- ==================== PROJECTS ==================== -->
+    <section id="projects" class="section">
+        <div class="container">
+            <div class="section-label" data-reveal>// FEATURED PROJECTS</div>
+
+            <!-- Discord-AIBot -->
+            <article class="project-feature" data-reveal>
+                <div class="project-info">
+                    <div class="project-badges">
+                        <span class="badge badge-primary">Open Source</span>
+                        <span class="badge badge-outline">2023 — Present</span>
+                    </div>
+                    <h3>Discord-AIBot</h3>
+                    <p>A multi-model Discord AI assistant supporting streaming responses, deep thinking mode, and full i18n across 4 languages.</p>
+                    <ul class="project-bullets">
+                        <li>Hot-swappable models: OpenAI, Claude, Gemini, DeepSeek</li>
+                        <li>Multimodal input — image, PDF, and voice</li>
+                        <li>Self-hosted 24/7 on personal home server</li>
+                    </ul>
+                    <div class="project-tech">
+                        <span>Node.js</span><span>Discord.js</span><span>OpenAI</span><span>Claude API</span>
+                    </div>
+                    <a href="https://github.com/Javis603/Discord-AIBot" target="_blank" class="project-link" data-magnetic>
+                        View on GitHub <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="project-visual">
+                    <div class="project-image-wrap" data-tilt>
+                        <img src="https://github.com/Javis603/Discord-AIBot/raw/main/.github/assets/screenshots/en/ai-chat.gif" alt="Discord AI Bot demo" loading="lazy">
+                    </div>
+                </div>
+            </article>
+
+            <!-- Home Lab -->
+            <article class="project-sm" data-reveal>
+                <div class="project-badges">
+                    <span class="badge badge-outline">2021 — Present</span>
+                </div>
+                <h3>Home Lab</h3>
+                <p>Self-hosted infrastructure — Docker services, LLM gateway, and 24/7 monitoring with secure remote access.</p>
+                <div class="project-tech">
+                    <span>Docker</span><span>Linux</span><span>Nginx</span><span>Cloudflare</span><span>Ollama</span><span>ZeroTier</span>
+                </div>
+            </article>
         </div>
     </section>
 
-    <section id="projects" class="container">
-        <h2 class="section-heading">Featured Work</h2>
-        <div class="bento-grid">
-            
-            <div class="bento-card large glass-panel spotlight" data-url="https://github.com/Javis603/Discord-AIBot">
-                <div class="card-bg-image" style="
-                    background-image: url('https://github.com/Javis603/Discord-AIBot/raw/main/.github/assets/screenshots/en/ai-chat.gif');
-                    background-size: contain; 
-                    background-repeat: no-repeat;
-                    background-position: center;
-                    background-color: #313338;
-                "></div>
-                
-                <div class="card-content">
-                    <div class="card-badge">Featured</div>
-                    <h3>Discord AI Bot</h3>
-                    <p>An intelligent bot powered by OpenAI models, featuring natural language processing.</p>
-                    <div class="tags">
-                        <span>Node.js</span>
-                        <span>OpenAI</span>
-                        <span>Discord.js</span>
+    <!-- ==================== STACK ==================== -->
+    <section id="stack" class="section">
+        <div class="container">
+            <div class="section-label" data-reveal>// TECH STACK</div>
+            <div class="stack-grid">
+                <div class="stack-group" data-reveal data-delay="0" style="--accent-color:#818cf8">
+                    <div class="stack-header">
+                        <i class="fas fa-code"></i>
+                        <h4>Languages</h4>
+                    </div>
+                    <div class="stack-pills">
+                        <span>JavaScript</span><span>TypeScript</span><span>Python</span><span>SQL</span><span>Bash</span>
                     </div>
                 </div>
-            </div>
-
-            <div class="bento-card medium glass-panel spotlight" data-url="#">
-                <div class="card-content">
-                    <h3>Personal Portfolio</h3>
-                    <p>The website you are looking at right now. Built with modern glassmorphism aesthetics.</p>
-                    <div class="tags">
-                        <span>HTML5</span>
-                        <span>CSS3</span>
-                        <span>Glass UI</span>
+                <div class="stack-group" data-reveal data-delay="60" style="--accent-color:#c084fc">
+                    <div class="stack-header">
+                        <i class="fas fa-window-maximize"></i>
+                        <h4>Frontend</h4>
+                    </div>
+                    <div class="stack-pills">
+                        <span>Vue 3</span><span>Vite</span><span>Pinia</span><span>HTML / CSS</span>
                     </div>
                 </div>
-            </div>
-
-            <div class="bento-card small glass-panel spotlight" data-url="#">
-                <div class="card-content">
-                    <h3>Security Research</h3>
-                    <p>Analyzing vulnerabilities and defense.</p>
+                <div class="stack-group" data-reveal data-delay="120" style="--accent-color:#34d399">
+                    <div class="stack-header">
+                        <i class="fas fa-database"></i>
+                        <h4>Backend</h4>
+                    </div>
+                    <div class="stack-pills">
+                        <span>Node.js</span><span>Express</span><span>MongoDB</span><span>REST API</span><span>WebSocket</span>
+                    </div>
                 </div>
-            </div>
-
-            <div class="bento-card small glass-panel spotlight" data-url="#">
-                <div class="card-content">
-                    <h3>Coming Soon</h3>
-                    <p>More tools in development.</p>
+                <div class="stack-group" data-reveal data-delay="180" style="--accent-color:#f472b6">
+                    <div class="stack-header">
+                        <i class="fas fa-brain"></i>
+                        <h4>AI / ML</h4>
+                    </div>
+                    <div class="stack-pills">
+                        <span>OpenAI</span><span>Claude</span><span>Gemini</span><span>DeepSeek</span><span>Ollama</span><span>Prompt Engineering</span>
+                    </div>
+                </div>
+                <div class="stack-group" data-reveal data-delay="240" style="--accent-color:#fbbf24">
+                    <div class="stack-header">
+                        <i class="fas fa-network-wired"></i>
+                        <h4>Infrastructure</h4>
+                    </div>
+                    <div class="stack-pills">
+                        <span>Docker</span><span>Git</span><span>Linux</span><span>Nginx</span><span>Cloudflare</span><span>n8n</span>
+                    </div>
+                </div>
+                <div class="stack-group" data-reveal data-delay="300" style="--accent-color:#38bdf8">
+                    <div class="stack-header">
+                        <i class="fas fa-wand-magic-sparkles"></i>
+                        <h4>AI Dev Tools</h4>
+                    </div>
+                    <div class="stack-pills">
+                        <span>Claude Code</span><span>OpenAI Codex</span><span>Cursor</span><span>GitHub Copilot</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer>
-        <div class="container footer-content">
-            <div class="socials">
-                <a href="https://github.com/Javis603" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="mailto:contact@javis-ai.com"><i class="fas fa-envelope"></i></a>
+    <!-- ==================== CONTACT ==================== -->
+    <section id="contact" class="section">
+        <div class="container contact-wrap">
+            <div class="section-label" data-reveal>// CONTACT</div>
+            <h2 data-reveal data-delay="80">Get in <span class="text-gradient">Touch</span></h2>
+            <p class="contact-desc" data-reveal data-delay="160">Got questions, ideas, or just want to say hi?<br>Feel free to reach out.</p>
+            <a href="mailto:me@javis-ai.com" class="contact-email" data-reveal data-delay="240" data-magnetic>
+                me@javis-ai.com <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-links">
+                <a href="https://github.com/Javis603" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="mailto:me@javis-ai.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
             </div>
-            <p class="copyright">© 2025 Javis603. All systems operational.</p>
-            
-            <div class="visitor-counter">
-                <span class="label">VISITORS</span>
-                <span id="busuanzi_container_site_pv" style="display:none">
-                    <span id="busuanzi_value_site_pv" class="count">--</span>
+            <div class="footer-meta">
+                <span class="footer-copy">Javis Ng &copy; 2025–2026</span>
+                <span class="footer-dot">·</span>
+                <span class="footer-visitors" id="busuanzi_container_site_pv" style="display:none">
+                    <span id="busuanzi_value_site_pv">--</span> views
                 </span>
             </div>
         </div>
     </footer>
 
     <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    
     <script src="js/main.js" defer></script>
 </body>
 </html>
