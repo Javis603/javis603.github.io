@@ -116,13 +116,14 @@ h3{font-size:clamp(1.3rem,2.5vw,1.7rem);font-weight:600}
     -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
 
-/* ── Navigation — Floating Pill ─────────── */
+/* ── Navigation — Full-width Bar ─────────── */
 .nav{
     position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);
+    width:calc(100% - 6rem);max-width:1260px;
     z-index:100;
     display:flex;align-items:center;gap:.3rem;
-    padding:.35rem .4rem .35rem 1rem;
-    border-radius:999px;
+    padding:.45rem .6rem .45rem 1.2rem;
+    border-radius:14px;
     background:rgba(11,11,17,.6);
     backdrop-filter:blur(24px) saturate(180%);
     -webkit-backdrop-filter:blur(24px) saturate(180%);
@@ -137,7 +138,7 @@ h3{font-size:clamp(1.3rem,2.5vw,1.7rem);font-weight:600}
 }
 .nav-logo span{color:var(--primary)}
 
-.nav-center{display:flex;align-items:center;gap:.15rem}
+.nav-center{display:flex;align-items:center;gap:.15rem;margin-left:auto}
 .nav-center a{
     color:var(--text-2);text-decoration:none;font-size:.84rem;
     padding:.4rem .75rem;border-radius:999px;
@@ -145,7 +146,7 @@ h3{font-size:clamp(1.3rem,2.5vw,1.7rem);font-weight:600}
 }
 .nav-center a:hover{color:#fff;background:rgba(129,140,248,.08)}
 
-.nav-right{display:flex;align-items:center;gap:.3rem;margin-left:.15rem}
+.nav-right{display:flex;align-items:center;gap:.3rem}
 
 .nav-gh{
     display:flex;align-items:center;justify-content:center;
@@ -452,7 +453,7 @@ h3{font-size:clamp(1.3rem,2.5vw,1.7rem);font-weight:600}
 @media(max-width:900px){
     .nav{
         top:.8rem;left:.8rem;right:.8rem;
-        transform:none;
+        width:auto;max-width:none;transform:none;
         justify-content:space-between;
         border-radius:var(--radius);
         padding:.4rem .4rem .4rem .9rem;
