@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initMagnetic();
     initMobileMenu();
     initSmoothScroll();
+    initLogoLoop();
+    initBorderGlow();
 });
 
 /* ── 1. Scroll Reveal ──────────────────── */
@@ -108,7 +110,112 @@ function initMobileMenu() {
     });
 }
 
-/* ── 6. Smooth Scroll ──────────────────── */
+/* ── 6. Logo Loop — RAF + exponential velocity smoothing ── */
+function initLogoLoop() {
+    const TAU = 0.25; // velocity smoothing constant (~250ms to settle)
+
+    document.querySelectorAll('.logo-loop-wrap').forEach(wrap => {
+        let isHovered = false;
+        wrap.addEventListener('mouseenter', () => { isHovered = true; });
+        wrap.addEventListener('mouseleave', () => { isHovered = false; });
+
+        wrap.querySelectorAll('.logo-track').forEach(track => {
+            const isReverse = track.classList.contains('logo-track--rev');
+            const BASE = isReverse ? -80 : 80; // px/s normal
+            const SLOW = isReverse ? -18 : 18; // px/s on hover
+
+            let seqWidth = 0;
+            let offset   = 0;
+            let vel      = BASE;
+            let prevTs   = null;
+
+            const tick = ts => {
+                // Measure exact float width by diffing the first item of each copy
+                if (seqWidth === 0) {
+                    const items = track.querySelectorAll('.logo-item');
+                    const half  = items.length / 2;
+                    if (items[0] && items[half]) {
+                        const r1 = items[0].getBoundingClientRect();
+                        const r2 = items[half].getBoundingClientRect();
+                        seqWidth = Math.abs(r2.left - r1.left);
+                    }
+                }
+
+                if (prevTs !== null && seqWidth > 0) {
+                    const dt     = Math.min((ts - prevTs) / 1000, 0.05); // cap at 50ms
+                    const target = isHovered ? SLOW : BASE;
+                    // Exponential ease toward target velocity (React Bits algorithm)
+                    vel += (target - vel) * (1 - Math.exp(-dt / TAU));
+                    offset = ((offset + vel * dt) % seqWidth + seqWidth) % seqWidth;
+                    track.style.transform = `translate3d(${-offset}px,0,0)`;
+                }
+
+                prevTs = ts;
+                requestAnimationFrame(tick);
+            };
+
+            document.fonts.ready.then(() => requestAnimationFrame(tick));
+        });
+    });
+}
+
+/* ── 7. Border Glow ────────────────────── */
+function initBorderGlow() {
+    const cards = document.querySelectorAll('.border-glow-card');
+    if (!cards.length) return;
+
+    const GLOWCOLOR = '43 65 70';
+    const INTENSITY = 1.0;
+    const COLORS    = ['#c9a84c', '#d4aa50', '#b89442'];
+    const POSITIONS = ['80% 55%','69% 34%','8% 6%','41% 38%','86% 85%','82% 18%','51% 4%'];
+    const GRAD_KEYS = ['--gradient-one','--gradient-two','--gradient-three','--gradient-four','--gradient-five','--gradient-six','--gradient-seven'];
+    const COLOR_MAP = [0, 1, 2, 0, 1, 2, 1];
+    const OPA_KEYS  = ['', '-60', '-50', '-40', '-30', '-20', '-10'];
+    const OPA_VALS  = [100, 60, 50, 40, 30, 20, 10];
+
+    function applyStaticVars(card) {
+        const [h, s, l] = GLOWCOLOR.split(' ').map(Number);
+        const base = `${h}deg ${s}% ${l}%`;
+        OPA_VALS.forEach((op, i) => {
+            card.style.setProperty(`--glow-color${OPA_KEYS[i]}`, `hsl(${base} / ${Math.min(op * INTENSITY, 100)}%)`);
+        });
+        GRAD_KEYS.forEach((key, i) => {
+            const c = COLORS[Math.min(COLOR_MAP[i], COLORS.length - 1)];
+            card.style.setProperty(key, `radial-gradient(at ${POSITIONS[i]}, ${c} 0px, transparent 50%)`);
+        });
+        card.style.setProperty('--gradient-base', `linear-gradient(${COLORS[0]} 0 100%)`);
+    }
+
+    cards.forEach(card => {
+        applyStaticVars(card);
+
+        card.addEventListener('pointermove', e => {
+            const rect = card.getBoundingClientRect();
+            const x  = e.clientX - rect.left;
+            const y  = e.clientY - rect.top;
+            const cx = rect.width  / 2;
+            const cy = rect.height / 2;
+            const dx = x - cx;
+            const dy = y - cy;
+
+            const kx   = dx !== 0 ? cx / Math.abs(dx) : Infinity;
+            const ky   = dy !== 0 ? cy / Math.abs(dy) : Infinity;
+            const prox = Math.min(Math.max(1 / Math.min(kx, ky), 0), 1) * 100;
+
+            let angle = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
+            if (angle < 0) angle += 360;
+
+            card.style.setProperty('--edge-proximity', prox.toFixed(3));
+            card.style.setProperty('--cursor-angle',   `${angle.toFixed(3)}deg`);
+        });
+
+        card.addEventListener('pointerleave', () => {
+            card.style.setProperty('--edge-proximity', '0');
+        });
+    });
+}
+
+/* ── 8. Smooth Scroll ──────────────────── */
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(a => {
         a.addEventListener('click', function (e) {
