@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
     initSmoothScroll();
     initLogoLoop();
+    initSkillUniverse();
     initBorderGlow();
 });
 
@@ -159,7 +160,47 @@ function initLogoLoop() {
     });
 }
 
-/* ── 7. Border Glow ────────────────────── */
+/* ── 7. Skill Universe ─────────────────── */
+function initSkillUniverse() {
+    const scope = document.querySelector('.section-stack');
+    const universe = document.querySelector('.skill-universe');
+    if (!scope || !universe) return;
+
+    const planets = universe.querySelectorAll('.skill-planet');
+    const name = scope.querySelector('.skill-detail-name');
+    const domain = scope.querySelector('.skill-detail-domain');
+    const use = scope.querySelector('.skill-detail-use');
+    if (!planets.length || !name || !domain || !use) return;
+
+    const setActive = planet => {
+        scope.classList.add('has-active');
+        planets.forEach(p => p.classList.toggle('active', p === planet));
+        name.textContent = planet.dataset.skill || '';
+        domain.textContent = planet.dataset.domain || '';
+        use.textContent = planet.dataset.use || '';
+    };
+
+    const clearActive = () => {
+        scope.classList.remove('has-active');
+        planets.forEach(p => p.classList.remove('active'));
+    };
+
+    planets.forEach(planet => {
+        planet.addEventListener('mouseenter', () => setActive(planet));
+        planet.addEventListener('focus', () => setActive(planet));
+        planet.addEventListener('click', e => {
+            e.stopPropagation();
+            setActive(planet);
+        });
+    });
+
+    universe.addEventListener('mouseleave', clearActive);
+    document.addEventListener('click', e => {
+        if (!scope.contains(e.target)) clearActive();
+    });
+}
+
+/* ── 8. Border Glow ────────────────────── */
 function initBorderGlow() {
     const cards = document.querySelectorAll('.border-glow-card');
     if (!cards.length) return;
