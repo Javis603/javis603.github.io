@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initDecrypt();
     initMagnetic();
     initMobileMenu();
+    initFooterYear();
     initSmoothScroll();
     initLogoLoop();
     initSkillUniverse();
@@ -111,7 +112,21 @@ function initMobileMenu() {
     });
 }
 
-/* ── 6. Logo Loop — RAF + exponential velocity smoothing ── */
+/* ── 6. Footer Year ───────────────────── */
+function initFooterYear() {
+    const el = document.querySelector('.footer-copy');
+    if (!el) return;
+
+    const startYear = parseInt(el.dataset.startYear || '', 10);
+    const name = el.dataset.name || 'Javis Ng';
+    if (!startYear) return;
+
+    const currentYear = new Date().getFullYear();
+    const yearText = currentYear > startYear ? `${startYear}–${currentYear}` : `${currentYear}`;
+    el.textContent = `${name} © ${yearText}`;
+}
+
+/* ── 7. Logo Loop — RAF + exponential velocity smoothing ── */
 function initLogoLoop() {
     const TAU = 0.25; // velocity smoothing constant (~250ms to settle)
 
@@ -160,7 +175,7 @@ function initLogoLoop() {
     });
 }
 
-/* ── 7. Skill Universe ─────────────────── */
+/* ── 8. Skill Universe ─────────────────── */
 function initSkillUniverse() {
     const scope = document.querySelector('.section-stack');
     const universe = document.querySelector('.skill-universe');
@@ -200,7 +215,7 @@ function initSkillUniverse() {
     });
 }
 
-/* ── 8. Border Glow ────────────────────── */
+/* ── 9. Border Glow ────────────────────── */
 function initBorderGlow() {
     const cards = document.querySelectorAll('.border-glow-card');
     if (!cards.length) return;
@@ -256,7 +271,7 @@ function initBorderGlow() {
     });
 }
 
-/* ── 8. Smooth Scroll ──────────────────── */
+/* ── 10. Smooth Scroll ─────────────────── */
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(a => {
         a.addEventListener('click', function (e) {
