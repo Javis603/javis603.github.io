@@ -1110,6 +1110,19 @@ h3{font-size:clamp(1.3rem,2.5vw,1.7rem);font-weight:600}
     .stack-categories{grid-template-columns:1fr}
 }
 
+@media(min-width:481px) and (max-width:900px){
+    .section-hero{
+        min-height:112svh;
+        padding-top:8.5rem;
+    }
+    .hero-content{
+        padding-top:clamp(8.5rem,15svh,11rem);
+    }
+    .hero-loop{
+        margin-top:3.5rem;
+    }
+}
+
 @media(max-width:480px){
     .hero-cta{flex-direction:column;width:100%}
     .btn{width:100%;justify-content:center;padding:.9rem}
