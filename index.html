@@ -160,19 +160,20 @@
             <div class="section-label" data-reveal>02</div>
 
             <!-- Discord-AIBot -->
-            <article class="project-feature" data-reveal>
+            <article class="project-case" data-reveal>
                 <div class="project-info">
-                    <div class="project-badges">
-                        <span class="badge badge-primary">Open Source</span>
-                        <span class="badge badge-outline">2023 — Present</span>
+                    <div class="project-meta">
+                        <span>Featured System</span>
+                        <span>2023 — Present</span>
+                        <span>Open Source</span>
                     </div>
                     <h3>Discord-AIBot</h3>
                     <p>A multi-model Discord AI assistant supporting streaming responses, deep thinking mode, and full i18n across 4 languages.</p>
-                    <ul class="project-bullets">
-                        <li>Hot-swappable models: OpenAI, Claude, Gemini, DeepSeek</li>
-                        <li>Multimodal input — image, PDF, and voice</li>
-                        <li>Self-hosted 24/7 on personal home server</li>
-                    </ul>
+                    <div class="project-outcomes" aria-label="Discord-AIBot highlights">
+                        <span><strong>Routing</strong> OpenAI · Claude · Gemini · DeepSeek</span>
+                        <span><strong>Input</strong> Image · PDF · voice</span>
+                        <span><strong>Runtime</strong> Self-hosted 24/7</span>
+                    </div>
                     <div class="project-tech">
                         <span>Node.js</span><span>Discord.js</span><span>OpenAI</span><span>Claude API</span>
                     </div>
@@ -182,22 +183,43 @@
                 </div>
                 <div class="project-visual">
                     <div class="project-image-wrap" data-tilt>
+                        <div class="project-window-bar">
+                            <span></span><span></span><span></span>
+                            <strong>discord-ai-bot</strong>
+                        </div>
                         <img src="https://github.com/Javis603/Discord-AIBot/raw/main/.github/assets/screenshots/en/ai-chat.gif" alt="Discord AI Bot demo" loading="lazy">
                     </div>
                 </div>
             </article>
 
             <!-- Home Lab -->
-            <article class="project-sm border-glow-card" data-reveal>
-                <span class="edge-light"></span>
-                <div class="border-glow-inner">
-                    <div class="project-badges">
-                        <span class="badge badge-outline">2021 — Present</span>
+            <article class="project-case project-case-secondary" data-reveal>
+                <div class="project-info">
+                    <div class="project-meta">
+                        <span>Infrastructure</span>
+                        <span>2021 — Present</span>
+                        <span>Always On</span>
                     </div>
                     <h3>Home Lab</h3>
-                    <p>Self-hosted infrastructure — Docker services, LLM gateway, and 24/7 monitoring with secure remote access.</p>
+                    <p>Self-hosted infrastructure for Docker services, LLM gateways, monitoring, and secure remote access.</p>
+                    <div class="project-outcomes" aria-label="Home Lab highlights">
+                        <span><strong>Edge</strong> Cloudflare · Nginx</span>
+                        <span><strong>Compute</strong> Linux · Docker · Ollama</span>
+                        <span><strong>Access</strong> ZeroTier · DNS · reverse proxy</span>
+                    </div>
                     <div class="project-tech">
                         <span>Docker</span><span>Linux</span><span>Nginx</span><span>Cloudflare</span><span>Ollama</span><span>ZeroTier</span>
+                    </div>
+                </div>
+                <div class="project-visual">
+                    <div class="infra-map" aria-hidden="true">
+                        <span class="infra-node node-edge">Edge</span>
+                        <span class="infra-node node-proxy">Nginx</span>
+                        <span class="infra-node node-core">Docker</span>
+                        <span class="infra-node node-ai">LLM</span>
+                        <span class="infra-line line-a"></span>
+                        <span class="infra-line line-b"></span>
+                        <span class="infra-line line-c"></span>
                     </div>
                 </div>
             </article>
@@ -278,21 +300,33 @@
             </div>
 
             <div class="stack-categories" data-reveal data-delay="160">
-                <div class="stack-category">
-                    <span>Development</span>
-                    <p>JavaScript · TypeScript · Python · SQL · Bash · Vue 3 · Vite · Pinia</p>
+                <div class="stack-category border-glow-card">
+                    <span class="edge-light"></span>
+                    <div class="border-glow-inner">
+                        <span>Development</span>
+                        <p>JavaScript · TypeScript · Python · SQL · Bash · Vue 3 · Vite · Pinia</p>
+                    </div>
                 </div>
-                <div class="stack-category">
-                    <span>Backend</span>
-                    <p>Node.js · Express · MongoDB · REST API · SSE · WebSocket</p>
+                <div class="stack-category border-glow-card">
+                    <span class="edge-light"></span>
+                    <div class="border-glow-inner">
+                        <span>Backend</span>
+                        <p>Node.js · Express · MongoDB · REST API · SSE · WebSocket</p>
+                    </div>
                 </div>
-                <div class="stack-category">
-                    <span>AI / Agents</span>
-                    <p>OpenAI · Claude · Gemini · DeepSeek · Ollama · MCP · n8n · AI Agents</p>
+                <div class="stack-category border-glow-card">
+                    <span class="edge-light"></span>
+                    <div class="border-glow-inner">
+                        <span>AI / Agents</span>
+                        <p>OpenAI · Claude · Gemini · DeepSeek · Ollama · MCP · n8n · AI Agents</p>
+                    </div>
                 </div>
-                <div class="stack-category">
-                    <span>Infra / Workflow</span>
-                    <p>Docker · Linux · Nginx · Cloudflare · ZeroTier · VMware · GitHub · Cursor</p>
+                <div class="stack-category border-glow-card">
+                    <span class="edge-light"></span>
+                    <div class="border-glow-inner">
+                        <span>Infra / Workflow</span>
+                        <p>Docker · Linux · Nginx · Cloudflare · ZeroTier · VMware · GitHub · Cursor</p>
+                    </div>
                 </div>
             </div>
         </div>
