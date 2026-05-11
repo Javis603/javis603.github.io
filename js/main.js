@@ -128,6 +128,8 @@ function initFooterYear() {
 
 /* ── 7. Logo Loop — RAF + exponential velocity smoothing ── */
 function initLogoLoop() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     const TAU = 0.25; // velocity smoothing constant (~250ms to settle)
 
     document.querySelectorAll('.logo-loop-wrap').forEach(wrap => {
@@ -137,8 +139,9 @@ function initLogoLoop() {
 
         wrap.querySelectorAll('.logo-track').forEach(track => {
             const isReverse = track.classList.contains('logo-track--rev');
-            const BASE = isReverse ? -80 : 80; // px/s normal
-            const SLOW = isReverse ? -18 : 18; // px/s on hover
+            const speed = parseFloat(wrap.dataset.speed || '80');
+            const BASE = isReverse ? -speed : speed; // px/s normal
+            const SLOW = BASE * 0.25; // px/s on hover
 
             let seqWidth = 0;
             let offset   = 0;
