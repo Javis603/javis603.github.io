@@ -1066,6 +1066,14 @@ h3{font-size:clamp(1.3rem,2.5vw,1.7rem);font-weight:600}
 }
 
 @media(min-width:901px) and (max-width:1320px){
+    #about > .container,
+    #projects > .container,
+    #stack > .container{
+        width:min(calc(100% - 7rem),1120px);
+        max-width:none;
+        padding-left:0;
+        padding-right:0;
+    }
     .hero-mark span{font-size:15rem}
     .hero-mark::before{width:385px;height:385px}
     .hero-mark::after{width:260px;height:260px}
