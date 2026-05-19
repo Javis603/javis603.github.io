@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initLogoLoop();
     initSkillUniverse();
     initBorderGlow();
+    initTokenMonitorWidget();
 });
 
 /* ── 1. Scroll Reveal ──────────────────── */
@@ -286,5 +287,90 @@ function initSmoothScroll() {
                 window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 80, behavior: 'smooth' });
             }
         });
+    });
+}
+
+/* ── 11. Token Monitor live widget ─────── */
+function initTokenMonitorWidget() {
+    const widget = document.querySelector('.tm-widget');
+    if (!widget) return;
+    const endpoint = widget.dataset.tmEndpoint;
+    if (!endpoint) return;
+
+    const POLL_MS = 30000;
+    const tokensEl  = widget.querySelector('[data-tm-tokens]');
+    const costEl    = widget.querySelector('[data-tm-cost]');
+    const updatedEl = widget.querySelector('[data-tm-updated]');
+    const statusEl  = widget.querySelector('[data-tm-status]');
+    const dotEl     = widget.querySelector('.tm-dot');
+
+    const tokenFmt = new Intl.NumberFormat('en-US');
+    const costFmt  = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 });
+
+    let lastUpdatedAt = null;
+    let pollTimer = null;
+    let tickTimer = null;
+
+    function setStatus(state) {
+        if (statusEl) {
+            statusEl.textContent = state === 'error' ? 'OFFLINE' : 'LIVE';
+            statusEl.classList.toggle('is-error', state === 'error');
+        }
+        if (dotEl) dotEl.classList.toggle('is-error', state === 'error');
+    }
+
+    function formatRelative(iso) {
+        const t = Date.parse(iso);
+        if (!Number.isFinite(t)) return '—';
+        const diff = Math.max(0, (Date.now() - t) / 1000);
+        if (diff < 5)     return 'just now';
+        if (diff < 60)    return `${Math.round(diff)}s ago`;
+        if (diff < 3600)  return `${Math.round(diff / 60)}m ago`;
+        if (diff < 86400) return `${Math.round(diff / 3600)}h ago`;
+        return `${Math.round(diff / 86400)}d ago`;
+    }
+
+    function paintUpdated() {
+        if (updatedEl && lastUpdatedAt) updatedEl.textContent = formatRelative(lastUpdatedAt);
+    }
+
+    async function fetchStats() {
+        try {
+            const res = await fetch(endpoint, { cache: 'no-store' });
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const data = await res.json();
+            const allTime = data?.periods?.allTime || {};
+            const tokens  = Number(allTime.totalTokens || 0);
+            const cost    = Number(allTime.costUsd || 0);
+            if (tokensEl) tokensEl.textContent = tokenFmt.format(tokens);
+            if (costEl)   costEl.textContent   = costFmt.format(cost);
+            lastUpdatedAt = data?.updatedAt || new Date().toISOString();
+            paintUpdated();
+            setStatus('ok');
+        } catch (_) {
+            setStatus('error');
+        }
+    }
+
+    function startPolling() {
+        if (pollTimer) return;
+        pollTimer = setInterval(fetchStats, POLL_MS);
+    }
+
+    function stopPolling() {
+        if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+    }
+
+    fetchStats();
+    startPolling();
+    tickTimer = setInterval(paintUpdated, 5000);
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            stopPolling();
+        } else {
+            fetchStats();
+            startPolling();
+        }
     });
 }
