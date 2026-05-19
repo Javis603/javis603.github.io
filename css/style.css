@@ -629,6 +629,20 @@ h3{font-size:clamp(1.3rem,2.5vw,1.7rem);font-weight:600}
     border-color:rgba(255,255,255,.16);
     box-shadow:0 28px 72px rgba(0,0,0,.34);
 }
+.tm-widget.is-updated{
+    animation:tm-flash 1.6s ease-out;
+}
+@keyframes tm-flash{
+    0%   {border-color:rgba(111,199,122,.45);box-shadow:0 24px 60px rgba(0,0,0,.26),0 0 0 1px rgba(111,199,122,.35),0 0 32px rgba(111,199,122,.18)}
+    100% {border-color:rgba(255,255,255,.105);box-shadow:0 24px 60px rgba(0,0,0,.26)}
+}
+.tm-value{
+    transition:color .25s;
+}
+.tm-widget.is-updated .tm-value{
+    color:#dff5e3;
+    transition:color .15s;
+}
 .tm-widget-bar{
     display:flex;
     align-items:center;

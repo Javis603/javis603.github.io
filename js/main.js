@@ -298,6 +298,7 @@ function initTokenMonitorWidget() {
     if (!endpoint) return;
 
     const POLL_MS = 30000;
+    const ANIM_MS = 2200;
     const tokensEl  = widget.querySelector('[data-tm-tokens]');
     const costEl    = widget.querySelector('[data-tm-cost]');
     const updatedEl = widget.querySelector('[data-tm-updated]');
@@ -305,11 +306,48 @@ function initTokenMonitorWidget() {
     const dotEl     = widget.querySelector('.tm-dot');
 
     const tokenFmt = new Intl.NumberFormat('en-US');
-    const costFmt  = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 });
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     let lastUpdatedAt = null;
     let pollTimer = null;
-    let tickTimer = null;
+    let currentTokens = 0;
+    let currentCost = 0;
+    let tokenAnimId = null;
+    let costAnimId = null;
+    let hasFirstData = false;
+
+    function easeOutQuart(t) { return 1 - Math.pow(1 - t, 4); }
+    function formatTokens(n) { return tokenFmt.format(Math.max(0, Math.round(n))); }
+    function formatCost(n) {
+        const amount = Math.max(0, Number(n) || 0);
+        return `$${amount.toFixed(amount >= 10 ? 2 : 4)}`;
+    }
+
+    function tween(el, from, to, formatter, cancelToken, duration) {
+        if (!el) return null;
+        if (cancelToken) cancelAnimationFrame(cancelToken);
+        if (reduceMotion || from === to) {
+            el.textContent = formatter(to);
+            return null;
+        }
+        const start = performance.now();
+        const delta = to - from;
+        let id = 0;
+        function frame(now) {
+            const progress = Math.min(1, (now - start) / duration);
+            el.textContent = formatter(from + delta * easeOutQuart(progress));
+            if (progress < 1) id = requestAnimationFrame(frame);
+        }
+        id = requestAnimationFrame(frame);
+        return id;
+    }
+
+    function flashUpdate() {
+        widget.classList.remove('is-updated');
+        // Force reflow so the animation can re-trigger
+        void widget.offsetWidth;
+        widget.classList.add('is-updated');
+    }
 
     function setStatus(state) {
         if (statusEl) {
@@ -340,13 +378,19 @@ function initTokenMonitorWidget() {
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             const data = await res.json();
             const allTime = data?.periods?.allTime || {};
-            const tokens  = Number(allTime.totalTokens || 0);
-            const cost    = Number(allTime.costUsd || 0);
-            if (tokensEl) tokensEl.textContent = tokenFmt.format(tokens);
-            if (costEl)   costEl.textContent   = costFmt.format(cost);
+            const nextTokens = Number(allTime.totalTokens || 0);
+            const nextCost   = Number(allTime.costUsd || 0);
+            const tokensChanged = nextTokens !== currentTokens;
+            const costChanged   = nextCost !== currentCost;
+            tokenAnimId = tween(tokensEl, currentTokens, nextTokens, formatTokens, tokenAnimId, ANIM_MS);
+            costAnimId  = tween(costEl,   currentCost,   nextCost,   formatCost,   costAnimId,   ANIM_MS);
+            currentTokens = nextTokens;
+            currentCost = nextCost;
             lastUpdatedAt = data?.updatedAt || new Date().toISOString();
             paintUpdated();
             setStatus('ok');
+            if (hasFirstData && (tokensChanged || costChanged)) flashUpdate();
+            hasFirstData = true;
         } catch (_) {
             setStatus('error');
         }
@@ -363,7 +407,7 @@ function initTokenMonitorWidget() {
 
     fetchStats();
     startPolling();
-    tickTimer = setInterval(paintUpdated, 5000);
+    setInterval(paintUpdated, 5000);
 
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
