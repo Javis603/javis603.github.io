@@ -349,6 +349,10 @@ function initTokenMonitorWidget() {
         widget.classList.add('is-updated');
     }
 
+    widget.addEventListener('animationend', (e) => {
+        if (e.animationName === 'tm-flash') widget.classList.remove('is-updated');
+    });
+
     function setStatus(state) {
         if (statusEl) {
             statusEl.textContent = state === 'error' ? 'OFFLINE' : 'LIVE';
