@@ -520,12 +520,24 @@ h3{font-size:clamp(1.3rem,2.5vw,1.7rem);font-weight:600}
 }
 .project-tech span:hover{color:#fff;border-color:var(--border-hover)}
 
+.project-actions{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:.85rem 1.1rem;
+}
 .project-link{
     display:inline-flex;align-items:center;gap:6px;
     color:var(--primary);text-decoration:none;font-size:.9rem;font-weight:500;
     transition:gap .25s var(--ease);
 }
 .project-link:hover{gap:10px}
+.project-link-secondary{
+    color:var(--text-3);
+}
+.project-link-secondary:hover{
+    color:var(--text);
+}
 
 /* Project visuals */
 .project-visual{position:relative}
@@ -1272,6 +1284,11 @@ h3{font-size:clamp(1.3rem,2.5vw,1.7rem);font-weight:600}
     .project-meta{gap:.55rem}
     .project-meta span + span{
         padding-left:.55rem;
+    }
+    .project-actions{
+        align-items:flex-start;
+        flex-direction:column;
+        gap:.7rem;
     }
     .stack-categories{grid-template-columns:1fr}
 }
