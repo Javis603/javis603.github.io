@@ -277,23 +277,33 @@ h3{font-size:clamp(1.3rem,2.5vw,1.7rem);font-weight:600}
     position:absolute;
     left:79%;
     top:42%;
+    width:min(38vw,470px);
+    aspect-ratio:1;
     transform:translate(-50%,-50%);
     z-index:1;
     pointer-events:none;
+    isolation:isolate;
 }
-.hero-mark::before,
-.hero-mark::after{
-    content:"";
+.hero-particle-canvas{
     position:absolute;
-    inset:50% auto auto 50%;
-    transform:translate(-50%,-50%);
-    border:1px solid rgba(255,255,255,.06);
-    border-radius:50%;
+    inset:0;
+    z-index:2;
+    width:100%;
+    height:100%;
+    opacity:0;
+    filter:none;
+    transition:opacity .8s var(--ease);
 }
-.hero-mark::before{width:440px;height:440px}
-.hero-mark::after{width:300px;height:300px}
-.hero-mark span{
+.hero-mark.is-particle-ready .hero-particle-canvas{
+    opacity:.88;
+}
+.hero-mark-fallback{
+    position:absolute;
+    left:50%;
+    top:50%;
+    z-index:1;
     display:block;
+    transform:translate(-50%,-50%);
     font-family:var(--font-display);
     font-size:17rem;
     font-weight:800;
@@ -303,6 +313,10 @@ h3{font-size:clamp(1.3rem,2.5vw,1.7rem);font-weight:600}
     -webkit-text-stroke:1px rgba(255,255,255,.09);
     text-shadow:0 0 70px rgba(255,255,255,.035);
     opacity:.86;
+    transition:opacity .55s var(--ease);
+}
+.hero-mark.is-particle-ready .hero-mark-fallback{
+    opacity:.03;
 }
 
 .logo-loop-wrap.hero-loop{
@@ -1192,9 +1206,8 @@ h3{font-size:clamp(1.3rem,2.5vw,1.7rem);font-weight:600}
         padding-left:0;
         padding-right:0;
     }
-    .hero-mark span{font-size:15rem}
-    .hero-mark::before{width:385px;height:385px}
-    .hero-mark::after{width:260px;height:260px}
+    .hero-mark{width:min(36vw,430px)}
+    .hero-mark-fallback{font-size:15rem}
 }
 
 @media(max-width:900px){
@@ -1225,14 +1238,13 @@ h3{font-size:clamp(1.3rem,2.5vw,1.7rem);font-weight:600}
     .hero-copy{max-width:680px}
     .hero-mark{
         left:auto;
-        right:-2.5rem;
+        right:1rem;
         top:3.5rem;
+        width:320px;
         transform:none;
-        opacity:.28;
+        opacity:.2;
     }
-    .hero-mark span{font-size:11rem}
-    .hero-mark::before{width:300px;height:300px}
-    .hero-mark::after{width:205px;height:205px}
+    .hero-mark-fallback{font-size:11rem}
     .logo-loop-wrap.hero-loop{
         max-width:100%;
         width:100%;

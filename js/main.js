@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initFooterYear();
     initSmoothScroll();
     initLogoLoop();
+    initHeroParticles();
     initSkillUniverse();
     initBorderGlow();
     initTokenMonitorWidget();
@@ -179,7 +180,13 @@ function initLogoLoop() {
     });
 }
 
-/* ── 8. Skill Universe ─────────────────── */
+/* ── 8. Hero Particle Monogram ─────────── */
+function initHeroParticles() {
+    if (!window.HeroParticles || typeof window.HeroParticles.initHeroParticleCanvas !== 'function') return;
+    window.HeroParticles.initHeroParticleCanvas();
+}
+
+/* ── 9. Skill Universe ─────────────────── */
 function initSkillUniverse() {
     const scope = document.querySelector('.section-stack');
     const universe = document.querySelector('.skill-universe');
@@ -219,7 +226,7 @@ function initSkillUniverse() {
     });
 }
 
-/* ── 9. Border Glow ────────────────────── */
+/* ── 10. Border Glow ───────────────────── */
 function initBorderGlow() {
     const cards = document.querySelectorAll('.border-glow-card');
     if (!cards.length) return;
@@ -275,7 +282,7 @@ function initBorderGlow() {
     });
 }
 
-/* ── 10. Smooth Scroll ─────────────────── */
+/* ── 11. Smooth Scroll ─────────────────── */
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(a => {
         a.addEventListener('click', function (e) {
@@ -290,7 +297,7 @@ function initSmoothScroll() {
     });
 }
 
-/* ── 11. Token Monitor live widget ─────── */
+/* ── 12. Token Monitor live widget ─────── */
 function initTokenMonitorWidget() {
     const widget = document.querySelector('.tm-widget');
     if (!widget) return;
